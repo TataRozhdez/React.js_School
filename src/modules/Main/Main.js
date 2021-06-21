@@ -22,6 +22,7 @@ export const Main = () => {
           ? products.map((p) => (
               <CustomCard
                 key={p.id}
+                id={p.id}
                 name={p.name}
                 price={p.price}
                 origin={p.origin}

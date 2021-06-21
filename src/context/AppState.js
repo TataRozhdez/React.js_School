@@ -3,7 +3,14 @@ import React, { useReducer } from 'react'
 import appReducer from './appReducer'
 import AppContext from './appContext'
 import { instance } from '../axios/axiosConfig'
-import { CALC_PAGE, CHANGE_PAGE, ERROR, GET_PRODUCTS, LOADING } from './types'
+import {
+  CALC_PAGE,
+  CHANGE_PAGE,
+  ERROR,
+  GET_PRODUCTS,
+  GET_PRODUCT_INFO,
+  LOADING,
+} from './types'
 
 const AppState = (props) => {
   const initialState = {
@@ -14,6 +21,7 @@ const AppState = (props) => {
     totalPage: 1,
 
     products: [],
+    oneProduct: null,
     cart: [],
   }
 
@@ -62,6 +70,22 @@ const AppState = (props) => {
     }
   }
 
+  const getOneProduct = async (id) => {
+    setLoading(true)
+    try {
+      const product = await instance.get(`/products/${id}`)
+
+      dispatch({
+        type: GET_PRODUCT_INFO,
+        payload: product.data,
+      })
+    } catch (error) {
+      setError('ERROR: GET /product/:id')
+
+      setTimeout(() => setError(''), 1000)
+    }
+  }
+
   const changePage = (number) => {
     getProducts(number, state.perPage)
 
@@ -79,6 +103,7 @@ const AppState = (props) => {
         page: state.page,
         perPage: state.perPage,
         products: state.products,
+        oneProduct: state.oneProduct,
         cart: state.cart,
         totalPage: state.totalPage,
 
@@ -86,6 +111,7 @@ const AppState = (props) => {
         setError,
         calcTotalPage,
         getProducts,
+        getOneProduct,
         changePage,
       }}
     >

@@ -5,6 +5,7 @@ import {
   LOADING,
   CALC_PAGE,
   CHANGE_PAGE,
+  GET_PRODUCT_INFO,
 } from './types'
 
 export default (state, action) => {
@@ -26,7 +27,15 @@ export default (state, action) => {
         ...state,
         error: '',
         loading: false,
+        oneProduct: null,
         products: action.payload,
+      }
+    case GET_PRODUCT_INFO:
+      return {
+        ...state,
+        error: '',
+        loading: false,
+        oneProduct: action.payload,
       }
     case SET_CART:
       return {
