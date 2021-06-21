@@ -1,10 +1,17 @@
 import React from 'react'
+import { Router } from 'react-router'
+
+import history from './services/history'
+import AppState from './context/AppState'
+import { Routes } from './routes'
 
 const App = () => {
   return (
-    <div className='App'>
-      <h1>sdgfh</h1>
-    </div>
+    <AppState>
+      <Router history={history}>
+        <Routes />
+      </Router>
+    </AppState>
   )
 }
 
