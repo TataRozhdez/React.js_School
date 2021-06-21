@@ -8,7 +8,7 @@ export const Product = () => {
   const { id } = useParams()
 
   const appContext = useContext(AppContext)
-  const { getOneProduct, oneProduct } = appContext
+  const { getOneProduct, oneProduct, addToCart } = appContext
 
   useEffect(() => {
     getOneProduct(id)
@@ -20,9 +20,15 @@ export const Product = () => {
         <div>
           <h1>{oneProduct.name}</h1>
           <h3>Orrigin: {oneProduct.origin}</h3>
-          <h3>Price: {oneProduct.price}</h3>
+          <h3>Price: {oneProduct.price}$</h3>
           <div className='w-100 d-flex justify-content-center'>
-            <Button variant='success' className='w-50'>
+            <Button
+              variant='success'
+              onClick={() =>
+                addToCart(oneProduct.id, oneProduct.name, oneProduct.price)
+              }
+              className='w-50'
+            >
               Buy
             </Button>
           </div>

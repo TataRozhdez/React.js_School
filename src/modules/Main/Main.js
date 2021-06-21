@@ -7,13 +7,11 @@ import { CustomCard } from './components/CustomCard/CustomCard'
 
 export const Main = () => {
   const appContext = useContext(AppContext)
-  const { products, getProducts, page, perPage } = appContext
+  const { products, getProducts, page, perPage, addToCart } = appContext
 
   useEffect(() => {
     !products.length && getProducts(page, perPage)
   }, [])
-
-  console.log('appContext', appContext)
 
   return (
     <Container>
@@ -26,6 +24,7 @@ export const Main = () => {
                 name={p.name}
                 price={p.price}
                 origin={p.origin}
+                addToCart={addToCart}
               />
             ))
           : null}

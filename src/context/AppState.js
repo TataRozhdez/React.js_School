@@ -19,6 +19,7 @@ const AppState = (props) => {
     page: 1,
     perPage: 10,
     totalPage: 1,
+    totalItems: 1,
 
     products: [],
     oneProduct: null,
@@ -95,6 +96,50 @@ const AppState = (props) => {
     })
   }
 
+  const addToCart = (id, name, price) => {
+    const localCart = localStorage.getItem('shopcart')
+    const cart = JSON.parse(localCart)
+
+    const newLocal = []
+
+    if (cart) {
+      const item = cart.find((c) => c.id === id)
+
+      if (item) {
+        const arr = cart.filter((item) => item.id !== id)
+
+        newLocal.push(
+          {
+            id: id,
+            name: name,
+            price: price,
+            number: ++item.number,
+          },
+          ...arr
+        )
+      } else {
+        newLocal.push(
+          {
+            id: id,
+            name: name,
+            price: price,
+            number: 1,
+          },
+          ...cart
+        )
+      }
+    } else if (!cart) {
+      newLocal.push({
+        id: id,
+        name: name,
+        price: price,
+        number: 1,
+      })
+    }
+
+    localStorage.setItem('shopcart', JSON.stringify(newLocal))
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -106,6 +151,7 @@ const AppState = (props) => {
         oneProduct: state.oneProduct,
         cart: state.cart,
         totalPage: state.totalPage,
+        totalItems: state.totalItems,
 
         setLoading,
         setError,
@@ -113,6 +159,7 @@ const AppState = (props) => {
         getProducts,
         getOneProduct,
         changePage,
+        addToCart,
       }}
     >
       {props.children}
