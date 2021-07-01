@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap'
 
 import { CartCard } from './components/CartCard/CartCard'
 
-export const Cart = () => {
+export const OrderPage = () => {
   const [cart, setCart] = useState([])
   const [total, setTotal] = useState()
 
@@ -33,7 +33,7 @@ export const Cart = () => {
 
   return (
     <Container>
-      <h1 className='text-primary'>Shopping Cart</h1>
+      <h1 className="text-primary">Shopping Cart</h1>
       {cart.length ? (
         cart.map((c) => (
           <CartCard

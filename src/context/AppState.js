@@ -2,7 +2,7 @@ import React, { useReducer } from 'react'
 
 import appReducer from './appReducer'
 import AppContext from './appContext'
-import { instance } from '../axios/axiosConfig'
+import { instance } from '../api/axiosConfig'
 import {
   CALC_PAGE,
   CHANGE_PAGE,

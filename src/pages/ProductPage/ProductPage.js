@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import AppContext from '../../context/appContext'
 
-export const Product = () => {
+export const ProductPage = () => {
   const { id } = useParams()
 
   const appContext = useContext(AppContext)
@@ -21,13 +21,13 @@ export const Product = () => {
           <h1>{oneProduct.name}</h1>
           <h3>Orrigin: {oneProduct.origin}</h3>
           <h3>Price: {oneProduct.price}$</h3>
-          <div className='w-100 d-flex justify-content-center'>
+          <div className="w-100 d-flex justify-content-center">
             <Button
-              variant='success'
+              variant="success"
               onClick={() =>
                 addToCart(oneProduct.id, oneProduct.name, oneProduct.price)
               }
-              className='w-50'
+              className="w-50"
             >
               Buy
             </Button>

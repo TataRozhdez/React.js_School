@@ -1,21 +1,21 @@
 import React from 'react'
 import { Redirect, Switch } from 'react-router-dom'
 
+import { HomePage } from '../pages/HomePage/HomePage'
+import { OrderPage } from '../pages/OrderPage/OrderPage'
+import { ProductPage } from '../pages/ProductPage/ProductPage'
 import { RouteWrapper } from './RouteWrapper'
-import { Main } from '../modules/Main/Main'
-import { Cart } from '../modules/Cart/Cart'
-import { Product } from '../modules/Product/Product'
 
 export const Routes = () => {
   return (
     <div>
       <Switch>
-        <RouteWrapper path='/' exact component={Main} />
-        <RouteWrapper path='/product/:id' exact component={Product} />
+        <RouteWrapper path="/" exact component={HomePage} />
+        <RouteWrapper path="/product/:id" exact component={ProductPage} />
 
-        <RouteWrapper path='/cart' exact component={Cart} />
+        <RouteWrapper path="/cart" exact component={OrderPage} />
 
-        <Redirect to='/' />
+        <Redirect to="/" />
       </Switch>
     </div>
   )

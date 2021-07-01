@@ -13,7 +13,7 @@ export const Layout = ({ children }) => {
   return (
     <div>
       {loading && <CustomSpinner />}
-      {error.length ? <Alert variant='danger'>{error}</Alert> : null}
+      {error.length ? <Alert variant="danger">{error}</Alert> : null}
 
       <Header />
       {children}

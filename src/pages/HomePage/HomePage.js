@@ -5,7 +5,7 @@ import { CustomPagination } from '../../components/CustomPagination/CustomPagina
 import AppContext from '../../context/appContext'
 import { CustomCard } from './components/CustomCard/CustomCard'
 
-export const Main = () => {
+export const HomePage = () => {
   const appContext = useContext(AppContext)
   const { products, getProducts, page, perPage, addToCart } = appContext
 
@@ -15,7 +15,7 @@ export const Main = () => {
 
   return (
     <Container>
-      <div className='d-flex flex-row flex-wrap mb-2'>
+      <div className="d-flex flex-row flex-wrap mb-2">
         {products.length
           ? products.map((p) => (
               <CustomCard
@@ -29,7 +29,7 @@ export const Main = () => {
             ))
           : null}
       </div>
-      <div className='w-100 d-flex justify-content-end'>
+      <div className="w-100 d-flex justify-content-end">
         <CustomPagination />
       </div>
     </Container>
