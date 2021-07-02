@@ -2,9 +2,9 @@ import React, { useContext, useEffect } from 'react'
 import { Container, Button } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 
-import { SHOPLAND_ORDERS } from '../../constants'
-import AppContext from '../../context/appContext'
-import { setLS, prepareOrderList } from '../../utils/helpers'
+import { SHOPLAND_ORDERS } from '../constants'
+import AppContext from '../context/appContext'
+import { setLS, prepareOrderList } from '../utils/helpers/localStorage'
 
 export const ProductPage = () => {
   const { id } = useParams()

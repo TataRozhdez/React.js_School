@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react'
 import { Container } from 'react-bootstrap'
-import { SHOPLAND_ORDERS } from '../../constants'
+import { SHOPLAND_ORDERS } from '../constants'
 
-import AppContext from '../../context/appContext'
-import { prepareOrderList, setLS } from '../../utils/helpers'
-import { CustomCard } from './components/CustomCard/CustomCard'
-import { CustomPagination } from './components/CustomPagination/CustomPagination'
+import AppContext from '../context/appContext'
+import { prepareOrderList, setLS } from '../utils/helpers/localStorage'
+import { CustomCard } from '../components/cards/CustomCard/CustomCard'
+import { CustomPagination } from '../components/CustomPagination/CustomPagination'
 
 export const HomePage = () => {
   const appContext = useContext(AppContext)

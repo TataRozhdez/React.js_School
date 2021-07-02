@@ -1,4 +1,4 @@
-import { SHOPLAND_ORDERS } from '../constants'
+import { SHOPLAND_ORDERS } from '../../constants'
 
 export const getLS = (name) => JSON.parse(localStorage.getItem(name))
 

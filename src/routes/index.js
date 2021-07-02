@@ -1,9 +1,9 @@
 import React from 'react'
 import { Redirect, Switch } from 'react-router-dom'
 
-import { HomePage } from '../pages/HomePage/HomePage'
-import { OrderPage } from '../pages/OrderPage/OrderPage'
-import { ProductPage } from '../pages/ProductPage/ProductPage'
+import { HomePage } from '../pages/HomePage'
+import { OrderPage } from '../pages/OrderPage'
+import { ProductPage } from '../pages/ProductPage'
 import { RouteWrapper } from './RouteWrapper'
 
 export const Routes = () => {

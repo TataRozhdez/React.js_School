@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Container, Button } from 'react-bootstrap'
 
-import AppContext from '../../context/appContext'
+import AppContext from '../context/appContext'
 
-import { CartCard } from './components/CartCard/CartCard'
+import { CartCard } from '../components/cards/CartCard/CartCard'
 
 export const OrderPage = () => {
   const appContext = useContext(AppContext)

@@ -1,8 +1,8 @@
 import React, { useContext, useMemo } from 'react'
 import { Pagination } from 'react-bootstrap'
 
-import AppContext from '../../../../context/appContext'
-import { getArrayByNumber } from '../../../../utils'
+import AppContext from '../../context/appContext'
+import { getArrayByNumber } from '../../utils'
 
 export const CustomPagination = () => {
   const appContext = useContext(AppContext)

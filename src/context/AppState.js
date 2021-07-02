@@ -11,7 +11,7 @@ import {
   CHANGE_ORDER_LIST,
   SET_TOTAL_ORDERS,
 } from './types'
-import { getProductIDApi, getProductsApi } from '../api/helpers'
+import { getProductIDApi, getProductsApi } from '../services/api/helpers'
 
 const AppState = (props) => {
   const initialState = {
