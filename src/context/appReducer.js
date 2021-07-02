@@ -1,11 +1,11 @@
 import {
   ERROR,
-  GET_PRODUCTS,
-  SET_CART,
   LOADING,
-  CALC_PAGE,
-  CHANGE_PAGE,
+  GET_PRODUCTS,
   GET_PRODUCT_INFO,
+  CHANGE_PAGE,
+  CHANGE_ORDER_LIST,
+  SET_TOTAL_ORDERS,
 } from './types'
 
 export default (state, action) => {
@@ -13,7 +13,7 @@ export default (state, action) => {
     case LOADING:
       return {
         ...state,
-        error: '',
+        error: null,
         loading: action.payload,
       }
     case ERROR:
@@ -25,7 +25,7 @@ export default (state, action) => {
     case GET_PRODUCTS:
       return {
         ...state,
-        error: '',
+        error: null,
         loading: false,
         oneProduct: null,
         products: action.payload,
@@ -37,20 +37,20 @@ export default (state, action) => {
         loading: false,
         oneProduct: action.payload,
       }
-    case SET_CART:
+    case CHANGE_ORDER_LIST:
       return {
         ...state,
-        cart: action.payload,
+        order: action.payload,
       }
-    case CALC_PAGE:
+    case SET_TOTAL_ORDERS:
       return {
         ...state,
-        totalPage: action.payload,
+        totalOrder: action.payload,
       }
     case CHANGE_PAGE:
       return {
         ...state,
-        page: action.payload,
+        acivePage: action.payload,
       }
     default:
       return state

@@ -12,9 +12,7 @@ export const Routes = () => {
       <Switch>
         <RouteWrapper path="/" exact component={HomePage} />
         <RouteWrapper path="/product/:id" exact component={ProductPage} />
-
         <RouteWrapper path="/cart" exact component={OrderPage} />
-
         <Redirect to="/" />
       </Switch>
     </div>

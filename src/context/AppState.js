@@ -2,28 +2,30 @@ import React, { useReducer } from 'react'
 
 import appReducer from './appReducer'
 import AppContext from './appContext'
-import { instance } from '../api/axiosConfig'
 import {
-  CALC_PAGE,
-  CHANGE_PAGE,
+  LOADING,
   ERROR,
   GET_PRODUCTS,
   GET_PRODUCT_INFO,
-  LOADING,
+  CHANGE_PAGE,
+  CHANGE_ORDER_LIST,
+  SET_TOTAL_ORDERS,
 } from './types'
+import { getProductIDApi, getProductsApi } from '../api/helpers'
 
 const AppState = (props) => {
   const initialState = {
     loading: false,
-    error: '',
-    page: 1,
-    perPage: 10,
-    totalPage: 1,
-    totalItems: 1,
+    error: null,
 
-    products: [],
+    acivePage: 1,
+    perPage: 10,
+
+    products: null,
     oneProduct: null,
-    cart: [],
+
+    order: null,
+    totalOrder: null,
   }
 
   const [state, dispatch] = useReducer(appReducer, initialState)
@@ -40,51 +42,34 @@ const AppState = (props) => {
       type: ERROR,
       payload: message,
     })
-  }
 
-  const calcTotalPage = (numItems) => {
-    const numPage = Math.floor(numItems / state.perPage)
-    dispatch({
-      type: CALC_PAGE,
-      payload: numPage,
-    })
+    setTimeout(() => setError(null), 1500)
   }
 
   const getProducts = async (page, perPage) => {
     setLoading(true)
-    try {
-      const products = await instance.get('/products', {
-        params: {
-          page,
-          perPage,
-        },
-      })
-      calcTotalPage(products.data.totalItems)
-      dispatch({
-        type: GET_PRODUCTS,
-        payload: products.data.items,
-      })
-    } catch (error) {
-      setError('ERROR: GET /products')
 
-      setTimeout(() => setError(''), 1000)
-    }
+    const response = await getProductsApi(page, perPage)
+
+    response
+      ? dispatch({
+          type: GET_PRODUCTS,
+          payload: response,
+        })
+      : setError('ERROR: GET /products')
   }
 
   const getOneProduct = async (id) => {
     setLoading(true)
-    try {
-      const product = await instance.get(`/products/${id}`)
 
-      dispatch({
-        type: GET_PRODUCT_INFO,
-        payload: product.data,
-      })
-    } catch (error) {
-      setError('ERROR: GET /product/:id')
+    const response = await getProductIDApi(id)
 
-      setTimeout(() => setError(''), 1000)
-    }
+    response
+      ? dispatch({
+          type: GET_PRODUCT_INFO,
+          payload: response,
+        })
+      : setError(`ERROR: GET /product/${id}`)
   }
 
   const changePage = (number) => {
@@ -96,48 +81,18 @@ const AppState = (props) => {
     })
   }
 
-  const addToCart = (id, name, price) => {
-    const localCart = localStorage.getItem('shopcart')
-    const cart = JSON.parse(localCart)
+  const changeOrderList = (orderList) => {
+    dispatch({
+      type: CHANGE_ORDER_LIST,
+      payload: orderList,
+    })
+  }
 
-    const newLocal = []
-
-    if (cart) {
-      const item = cart.find((c) => c.id === id)
-
-      if (item) {
-        const arr = cart.filter((item) => item.id !== id)
-
-        newLocal.push(
-          {
-            id: id,
-            name: name,
-            price: price,
-            number: ++item.number,
-          },
-          ...arr
-        )
-      } else {
-        newLocal.push(
-          {
-            id: id,
-            name: name,
-            price: price,
-            number: 1,
-          },
-          ...cart
-        )
-      }
-    } else if (!cart) {
-      newLocal.push({
-        id: id,
-        name: name,
-        price: price,
-        number: 1,
-      })
-    }
-
-    localStorage.setItem('shopcart', JSON.stringify(newLocal))
+  const setTotalOrders = (obj) => {
+    dispatch({
+      type: SET_TOTAL_ORDERS,
+      payload: obj,
+    })
   }
 
   return (
@@ -145,21 +100,20 @@ const AppState = (props) => {
       value={{
         loading: state.loading,
         error: state.error,
-        page: state.page,
+        acivePage: state.acivePage,
         perPage: state.perPage,
         products: state.products,
         oneProduct: state.oneProduct,
-        cart: state.cart,
-        totalPage: state.totalPage,
-        totalItems: state.totalItems,
+        order: state.order,
+        totalOrder: state.totalOrder,
 
         setLoading,
         setError,
-        calcTotalPage,
         getProducts,
         getOneProduct,
         changePage,
-        addToCart,
+        changeOrderList,
+        setTotalOrders,
       }}
     >
       {props.children}
