@@ -1,0 +1,1 @@
+export const SHOPLAND_ORDERS = 'SHOPLAND_ORDERS'
