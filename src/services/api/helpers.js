@@ -1,11 +1,20 @@
 import { instance } from './axiosConfig'
 
-export const getProductsApi = async (page, perPage) => {
+export const getProductsApi = async ({
+  page,
+  perPage,
+  minPrice,
+  maxPrice,
+  origin,
+}) => {
   try {
     const products = await instance.get('/products', {
       params: {
         page,
         perPage,
+        minPrice,
+        maxPrice,
+        origin,
       },
     })
     return {

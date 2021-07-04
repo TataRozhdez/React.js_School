@@ -22,6 +22,11 @@ a,
   background-color: #0000008f;
 }
 
+.plug >  .spinner-border {
+  width: 5rem;
+  height: 5rem;
+}
+
 .card {
   min-width: 155px;
 }
@@ -53,6 +58,12 @@ a,
   padding-right: 0.1rem;
   min-width: 1.5rem;
   text-align: center;
+  cursor: default;
+}
+
+.form-control[readonly]:focus {
+  box-shadow: none;
+  border-color: #ced4da;
 }
 
 .badge-primary {
@@ -65,4 +76,8 @@ a,
   top: 6%;
   min-width: 23px;
   text-align: center;
+}
+
+.w-10 {
+  width: 10%;
 }

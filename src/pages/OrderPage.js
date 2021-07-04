@@ -1,13 +1,12 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Container, Button } from 'react-bootstrap'
 
-import AppContext from '../context/appContext'
-
 import { CartCard } from '../components/cards/CartCard/CartCard'
+import { orderSelector } from '../bus/order/selectors'
+import { useSelector } from 'react-redux'
 
 export const OrderPage = () => {
-  const appContext = useContext(AppContext)
-  const { order, totalOrder } = appContext
+  const { order, total } = useSelector(orderSelector)
 
   return (
     <Container>
@@ -17,6 +16,7 @@ export const OrderPage = () => {
           order.map((o) => (
             <CartCard
               key={o.id}
+              id={o.id}
               name={o.name}
               price={o.price}
               number={o.number}
@@ -26,10 +26,10 @@ export const OrderPage = () => {
           <h3>Please, add something to your cart</h3>
         )}
       </div>
-      {totalOrder && (
+      {total && (
         <div className="w-100 d-flex justify-content-end">
           <Button variant="success" disabled>
-            <h3 className="m-0">Total: {totalOrder.price}$</h3>
+            <h3 className="m-0">Total: {total.price}$</h3>
           </Button>
         </div>
       )}

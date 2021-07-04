@@ -1,27 +1,34 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Alert } from 'react-bootstrap'
 
-import { SHOPLAND_ORDERS } from '../../constants'
-import AppContext from '../../context/appContext'
 import { calcOrders } from '../../utils'
-import { getLS } from '../../utils/helpers/localStorage'
 import history from '../../services/history'
+import { SHOPLAND_ORDERS } from '../../init/constants'
+import { getLS } from '../../utils/helpers/localStorage'
+import { productsSelector } from '../../bus/products/selectors'
+import { orderSelector } from '../../bus/order/selectors'
+import { changeOrder, setTotal } from '../../bus/order/actions'
 
-import { CustomSpinner } from '../CustomSpinner/CustomSpinner'
 import { Header } from '../Header/Header'
+import { CustomSpinner } from '../CustomSpinner/CustomSpinner'
 
 export const Layout = ({ children }) => {
-  const appContext = useContext(AppContext)
+  const dispatch = useDispatch()
+
+  const { order, total } = useSelector(orderSelector)
+  const products = useSelector(productsSelector)
+
+  const loading = products.loading
+  const error = products.error
+
   const location = history.location.pathname
 
   const ordersLS = getLS(SHOPLAND_ORDERS)
 
-  const { order, totalOrder, changeOrderList, loading, error, setTotalOrders } =
-    appContext
-
   useEffect(() => {
-    if (!order && ordersLS) changeOrderList(ordersLS)
-    if (order) setTotalOrders(calcOrders(order))
+    if (!order && ordersLS) dispatch(changeOrder(ordersLS))
+    if (order) dispatch(setTotal(calcOrders(order)))
   }, [order])
 
   return (
@@ -29,7 +36,7 @@ export const Layout = ({ children }) => {
       {loading && <CustomSpinner />}
       {error && <Alert variant="danger">{error}</Alert>}
 
-      <Header totalOrder={totalOrder} pathname={location} />
+      <Header totalOrder={total} pathname={location} />
       {children}
     </div>
   )
