@@ -25,11 +25,11 @@ export const HomePage = () => {
   }
 
   const handleFetchProd = () => {
-    const origin = originSelect.reduce((acc, cur) => {
-      acc.push(cur.value)
+    const origins = originSelect.reduce((acc, cur) => {
+      acc += `,${cur.value}`
       return acc
-    }, [])
-    dispatch(fetchProducts({ page, perPage, minPrice, maxPrice, origin }))
+    }, '')
+    dispatch(fetchProducts({ page, perPage, minPrice, maxPrice, origins }))
   }
 
   useEffect(() => {

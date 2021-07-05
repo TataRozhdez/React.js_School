@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form } from 'react-bootstrap'
+import { Form, Button, Accordion } from 'react-bootstrap'
+import { List } from 'react-bootstrap-icons'
 import Select from 'react-select'
 
 import { MultiRange } from '../MultiRange/MultiRange'
@@ -23,25 +24,32 @@ export const Filter = () => {
 
   return (
     <Form className="mb-2">
-      <h3>Filter:</h3>
-      <div className="d-flex flex-row align-items-center justify-content-between">
-        <Form.Group className="d-flex align-items-center">
-          <Form.Label className="me-2">Price: </Form.Label>
-          <MultiRange
-            min={minPrice}
-            max={maxPrice}
-            changePriceMin={onChangePriceMin}
-            onChangePriceMax={onChangePriceMax}
-          />
-        </Form.Group>
-        <Select
-          options={optionsOrigins}
-          value={origin}
-          onChange={(value) => onChangeOrigin(value)}
-          className="w-50"
-          isMulti
-        />
-      </div>
+      <Accordion>
+        <Accordion.Toggle as={Button} variant="light" eventKey="0">
+          <List />
+        </Accordion.Toggle>
+
+        <Accordion.Collapse eventKey="0">
+          <div className="d-flex flex-row align-items-center justify-content-between">
+            <Form.Group className="d-flex align-items-center">
+              <Form.Label className="me-2">Price: </Form.Label>
+              <MultiRange
+                min={minPrice}
+                max={maxPrice}
+                changePriceMin={onChangePriceMin}
+                onChangePriceMax={onChangePriceMax}
+              />
+            </Form.Group>
+            <Select
+              options={optionsOrigins}
+              value={origin}
+              onChange={(value) => onChangeOrigin(value)}
+              className="w-50"
+              isMulti
+            />
+          </div>
+        </Accordion.Collapse>
+      </Accordion>
     </Form>
   )
 }

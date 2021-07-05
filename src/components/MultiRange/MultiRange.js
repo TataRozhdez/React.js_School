@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import './MultiRange.css'
@@ -7,12 +7,6 @@ export const MultiRange = ({ min, max, changePriceMin, onChangePriceMax }) => {
   const minValRef = useRef(min)
   const maxValRef = useRef(max)
   const range = useRef(null)
-
-  // Convert to percentage
-  const getPercent = useCallback(
-    (value) => Math.round(((value - min) / (max - min)) * 100),
-    [min, max]
-  )
 
   const handleChangeMin = (event) => {
     const value = Math.min(Number(event.target.value), max - 1)
@@ -26,26 +20,17 @@ export const MultiRange = ({ min, max, changePriceMin, onChangePriceMax }) => {
     maxValRef.current = value
   }
 
-  // Set width of the range to decrease from the left side
   useEffect(() => {
-    const minPercent = getPercent(min)
-    const maxPercent = getPercent(maxValRef.current)
+    const minPercent = Math.round(((minValRef.current - 0) / (max - 0)) * 100)
+    const maxPercent = Math.round(
+      ((maxValRef.current - min) / (1000 - min)) * 100
+    )
 
     if (range.current) {
       range.current.style.left = `${minPercent}%`
       range.current.style.width = `${maxPercent - minPercent}%`
     }
-  }, [min, getPercent])
-
-  // Set width of the range to decrease from the right side
-  useEffect(() => {
-    const minPercent = getPercent(minValRef.current)
-    const maxPercent = getPercent(max)
-
-    if (range.current) {
-      range.current.style.width = `${maxPercent - minPercent}%`
-    }
-  }, [max, getPercent])
+  }, [min, max])
 
   return (
     <div className="cont">

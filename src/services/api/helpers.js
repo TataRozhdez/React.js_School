@@ -5,7 +5,7 @@ export const getProductsApi = async ({
   perPage,
   minPrice,
   maxPrice,
-  origin,
+  origins,
 }) => {
   try {
     const products = await instance.get('/products', {
@@ -14,7 +14,7 @@ export const getProductsApi = async ({
         perPage,
         minPrice,
         maxPrice,
-        origin,
+        origins,
       },
     })
     return {
