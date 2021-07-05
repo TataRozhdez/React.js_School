@@ -1,26 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Accordion } from 'react-bootstrap'
 import { List } from 'react-bootstrap-icons'
 import Select from 'react-select'
 
-import { MultiRange } from '../MultiRange/MultiRange'
-import { productsSelector } from '../../bus/products/selectors'
 import {
   changeOrigin,
   changePriceMax,
   changePriceMin,
 } from '../../bus/products/actions'
-import { optionsOrigins } from '../../init/constants'
+import { productsSelector } from '../../bus/products/selectors'
+import { fetchOrigins } from '../../bus/products/thunks'
+import { MultiRange } from '../MultiRange/MultiRange'
 
 export const Filter = () => {
   const dispatch = useDispatch()
 
-  const { minPrice, maxPrice, origin } = useSelector(productsSelector)
+  const { minPrice, maxPrice, origin, allOrigins } =
+    useSelector(productsSelector)
 
   const onChangePriceMin = (value) => dispatch(changePriceMin(value))
   const onChangePriceMax = (value) => dispatch(changePriceMax(value))
   const onChangeOrigin = (value) => dispatch(changeOrigin(value))
+
+  useEffect(() => {
+    !allOrigins && dispatch(fetchOrigins())
+  }, [])
 
   return (
     <Form className="mb-2">
@@ -41,7 +46,7 @@ export const Filter = () => {
               />
             </Form.Group>
             <Select
-              options={optionsOrigins}
+              options={allOrigins}
               value={origin}
               onChange={(value) => onChangeOrigin(value)}
               className="w-50"

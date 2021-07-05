@@ -23,3 +23,15 @@ export const calcOrders = (arr) => {
     price,
   }
 }
+
+export const prepareListSelect = (arr) => {
+  const newArr = arr.reduce((acc, cur) => {
+    acc.push({
+      value: cur.value,
+      label: cur.displayName,
+    })
+
+    return acc
+  }, [])
+  return newArr
+}

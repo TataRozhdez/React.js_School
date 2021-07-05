@@ -7,7 +7,7 @@ import {
   changeOrigin,
 } from './actions'
 
-import { fetchProducts } from './thunks'
+import { fetchOrigins, fetchProducts } from './thunks'
 
 const initialState = {
   loading: false,
@@ -19,6 +19,8 @@ const initialState = {
 
   minPrice: 0,
   maxPrice: 1000,
+
+  allOrigins: null,
   originSelect: [],
 }
 
@@ -52,5 +54,16 @@ export const productsReducer = createReducer(initialState, (builder) => {
     .addCase(changeOrigin, (state, action) => {
       state.page = 1
       state.originSelect = action.payload
+    })
+    .addCase(fetchOrigins.pending, (state) => {
+      state.loading = true
+    })
+    .addCase(fetchOrigins.fulfilled, (state, action) => {
+      state.loading = false
+      state.allOrigins = action.payload
+    })
+    .addCase(fetchOrigins.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.payload
     })
 })

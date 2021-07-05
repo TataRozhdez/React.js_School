@@ -35,3 +35,13 @@ export const getProductIDApi = async (id) => {
     console.error(error)
   }
 }
+
+export const getOrigins = async () => {
+  try {
+    const product = await instance.get(`/products-origins`)
+
+    return product.data.items
+  } catch (error) {
+    console.error(error)
+  }
+}
