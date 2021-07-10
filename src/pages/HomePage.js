@@ -2,11 +2,18 @@ import React, { useEffect } from 'react'
 import { Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { SHOPLAND_ORDERS } from '../init/constants'
-import { prepareOrderListADD, setLS } from '../utils/helpers/localStorage'
-import { productsSelector } from '../bus/products/selectors'
-import { fetchProducts } from '../bus/products/thunks'
-import { changeOrder } from '../bus/order/actions'
+import { fetchProducts } from '../bus/products/allProducts/thunks'
+import { productsSelector } from '../bus/products/allProducts/selectors'
+import { addOrder } from '../bus/order/actions'
+import {
+  pageSelector,
+  perPageSelector,
+} from '../bus/products/pagination/selectors'
+import {
+  maxPriceSelector,
+  minPriceSelector,
+  originSelectSelector,
+} from '../bus/products/filters/selectors'
 
 import { CustomCard } from '../components/cards/CustomCard/CustomCard'
 import { CustomPagination } from '../components/CustomPagination/CustomPagination'
@@ -14,14 +21,16 @@ import { Filter } from '../components/Filter/Filter'
 
 export const HomePage = () => {
   const dispatch = useDispatch()
-  const { productsData, page, perPage, minPrice, maxPrice, originSelect } =
-    useSelector(productsSelector)
+
+  const productsData = useSelector(productsSelector)
+  const page = useSelector(pageSelector)
+  const perPage = useSelector(perPageSelector)
+  const minPrice = useSelector(minPriceSelector)
+  const maxPrice = useSelector(maxPriceSelector)
+  const originSelect = useSelector(originSelectSelector)
 
   const handleAddOrder = (id, name, price) => {
-    const productsLS = prepareOrderListADD(id, name, price)
-
-    dispatch(changeOrder(productsLS))
-    setLS(SHOPLAND_ORDERS, productsLS)
+    dispatch(addOrder(id, name, price))
   }
 
   const handleFetchProd = () => {
@@ -34,24 +43,16 @@ export const HomePage = () => {
 
   useEffect(() => {
     handleFetchProd()
-  }, [minPrice, maxPrice, page, originSelect])
+  }, [minPrice, maxPrice, page, originSelect, perPage])
 
   return (
     <Container className="flex-column">
       <Filter />
       <div className="d-flex flex-row flex-wrap mb-2">
-        {productsData
-          ? productsData.products.map((p) => (
-              <CustomCard
-                key={p.id}
-                id={p.id}
-                name={p.name}
-                price={p.price}
-                origin={p.origin}
-                handleAddOrder={handleAddOrder}
-              />
-            ))
-          : null}
+        {productsData &&
+          productsData.products.map((p) => (
+            <CustomCard key={p.id} {...p} handleAddOrder={handleAddOrder} />
+          ))}
       </div>
       <div className="w-100 d-flex justify-content-end">
         <CustomPagination />

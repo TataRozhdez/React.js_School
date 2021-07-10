@@ -2,14 +2,24 @@ import React, { useMemo } from 'react'
 import { Pagination, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { changePage, changePerPage } from '../../bus/products/actions'
-import { productsSelector } from '../../bus/products/selectors'
-import { fetchProducts } from '../../bus/products/thunks'
 import { getArrayByNumber } from '../../utils'
+import { productsSelector } from '../../bus/products/allProducts/selectors'
+import { fetchProducts } from '../../bus/products/allProducts/thunks'
+import {
+  changePage,
+  changePerPage,
+} from '../../bus/products/pagination/actions'
+import {
+  pageSelector,
+  perPageSelector,
+} from '../../bus/products/pagination/selectors'
 
 export const CustomPagination = () => {
   const dispatch = useDispatch()
-  const { productsData, page, perPage } = useSelector(productsSelector)
+
+  const productsData = useSelector(productsSelector)
+  const page = useSelector(pageSelector)
+  const perPage = useSelector(perPageSelector)
 
   const pagesCount = useMemo(() => {
     if (!productsData || !perPage) {

@@ -4,30 +4,10 @@ import PropTypes from 'prop-types'
 import { Card, FormControl, Button } from 'react-bootstrap'
 import { Trash } from 'react-bootstrap-icons'
 
-import {
-  prepareOrderListADD,
-  prepareOrderListRemove,
-  setLS,
-} from '../../../utils/helpers/localStorage'
-import { SHOPLAND_ORDERS } from '../../../init/constants'
-import { changeOrder } from '../../../bus/order/actions'
+import { addOrder, removeOrder } from '../../../bus/order/actions'
 
 export const CartCard = ({ name, id, price, number }) => {
   const dispatch = useDispatch()
-
-  const handleIncItem = () => {
-    const productsLS = prepareOrderListADD(id, name, price)
-
-    dispatch(changeOrder(productsLS))
-    setLS(SHOPLAND_ORDERS, productsLS)
-  }
-
-  const handleDecItem = (num) => {
-    const productsLS = prepareOrderListRemove(id, num)
-
-    dispatch(changeOrder(productsLS))
-    setLS(SHOPLAND_ORDERS, productsLS)
-  }
 
   return (
     <Card className="mb-2 p-2 me-2 w-25 align-items-center">
@@ -36,12 +16,15 @@ export const CartCard = ({ name, id, price, number }) => {
         <div className="d-flex flex-row">
           <Button
             variant="outline-primary border-0"
-            onClick={() => handleDecItem(1)}
+            onClick={() => dispatch(removeOrder(id, 1))}
           >
             &#8722;
           </Button>
           <FormControl value={number} readOnly className="w-25" />
-          <Button variant="outline-primary border-0" onClick={handleIncItem}>
+          <Button
+            variant="outline-primary border-0"
+            onClick={() => dispatch(addOrder(id, name, price))}
+          >
             +
           </Button>
         </div>
@@ -50,7 +33,7 @@ export const CartCard = ({ name, id, price, number }) => {
       <div className="w-100 d-flex justify-content-end ">
         <Button
           variant="outline-danger border-0"
-          onClick={() => handleDecItem(number)}
+          onClick={() => dispatch(removeOrder(id, number))}
         >
           <Trash />
         </Button>

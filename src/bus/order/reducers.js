@@ -1,12 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 
-import {
-  changeOrder,
-  decrementItem,
-  incrementItem,
-  removeItem,
-  setTotal,
-} from './actions'
+import { setTotal, addOrder, setOrder, removeOrder } from './actions'
 
 const initialState = {
   loading: false,
@@ -18,19 +12,22 @@ const initialState = {
 
 export const orderReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeOrder, (state, action) => {
+    .addCase(setOrder, (state, action) => {
       state.order = action.payload
+      state.total = action.total
     })
+
+    .addCase(addOrder, (state, action) => {
+      state.order = action.payload
+      state.total = action.total
+    })
+
+    .addCase(removeOrder, (state, action) => {
+      state.order = action.payload
+      state.total = action.total
+    })
+
     .addCase(setTotal, (state, action) => {
-      state.total = action.payload
-    })
-    .addCase(decrementItem, (state, action) => {
-      state.total = action.payload
-    })
-    .addCase(incrementItem, (state, action) => {
-      state.total = action.payload
-    })
-    .addCase(removeItem, (state, action) => {
       state.total = action.payload
     })
 })

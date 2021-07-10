@@ -1,6 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Nav, Navbar, Badge } from 'react-bootstrap'
+import { Navbar, Badge } from 'react-bootstrap'
 import { Cart2 } from 'react-bootstrap-icons'
 import { HouseDoor } from 'react-bootstrap-icons'
 
@@ -13,14 +14,14 @@ export const Header = ({ totalOrder, pathname }) => (
     </Navbar.Brand>
     <div className="d-flex flex-row">
       {pathname !== '/' && (
-        <Nav.Link href="/" className="d-flex align-items-center">
+        <Link to="/" className="d-flex align-items-center nav-link">
           <HouseDoor className="me-4" size="24" />
-        </Nav.Link>
+        </Link>
       )}
       {pathname !== '/cart' && (
-        <Nav.Link
-          href="/cart"
-          className="d-flex align-items-center position-relative"
+        <Link
+          to="/cart"
+          className="d-flex align-items-center position-relative nav-link"
         >
           <Cart2 className="me-4" size="24" />
           {totalOrder && (
@@ -28,7 +29,7 @@ export const Header = ({ totalOrder, pathname }) => (
               {totalOrder.number}
             </Badge>
           )}
-        </Nav.Link>
+        </Link>
       )}
     </div>
   </Navbar>

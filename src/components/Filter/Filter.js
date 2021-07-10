@@ -4,20 +4,27 @@ import { Form, Button, Accordion } from 'react-bootstrap'
 import { List } from 'react-bootstrap-icons'
 import Select from 'react-select'
 
+import { MultiRange } from '../MultiRange/MultiRange'
+import { fetchOrigins } from '../../bus/products/filters/thunks'
+import {
+  allOriginsSelector,
+  maxPriceSelector,
+  minPriceSelector,
+  originSelectSelector,
+} from '../../bus/products/filters/selectors'
 import {
   changeOrigin,
   changePriceMax,
   changePriceMin,
-} from '../../bus/products/actions'
-import { productsSelector } from '../../bus/products/selectors'
-import { fetchOrigins } from '../../bus/products/thunks'
-import { MultiRange } from '../MultiRange/MultiRange'
+} from '../../bus/products/filters/actions'
 
 export const Filter = () => {
   const dispatch = useDispatch()
 
-  const { minPrice, maxPrice, origin, allOrigins } =
-    useSelector(productsSelector)
+  const minPrice = useSelector(minPriceSelector)
+  const maxPrice = useSelector(maxPriceSelector)
+  const origin = useSelector(originSelectSelector)
+  const allOrigins = useSelector(allOriginsSelector)
 
   const onChangePriceMin = (value) => dispatch(changePriceMin(value))
   const onChangePriceMax = (value) => dispatch(changePriceMax(value))
