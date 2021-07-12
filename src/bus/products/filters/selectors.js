@@ -11,4 +11,4 @@ export const maxPriceSelector = (state) =>
 export const allOriginsSelector = (state) =>
   state.products.filtersReducer.allOrigins
 export const originSelectSelector = (state) =>
-  state.products.filtersReducer.originSelect
+  state.products.filtersReducer.origins

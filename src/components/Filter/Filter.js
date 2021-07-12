@@ -17,6 +17,7 @@ import {
   changePriceMax,
   changePriceMin,
 } from '../../bus/products/filters/actions'
+import { fetchProducts } from '../../bus/products/allProducts/thunks'
 
 export const Filter = () => {
   const dispatch = useDispatch()
@@ -29,6 +30,8 @@ export const Filter = () => {
   const onChangePriceMin = (value) => dispatch(changePriceMin(value))
   const onChangePriceMax = (value) => dispatch(changePriceMax(value))
   const onChangeOrigin = (value) => dispatch(changeOrigin(value))
+
+  const onFetchPRoduct = () => dispatch(fetchProducts())
 
   useEffect(() => {
     !allOrigins && dispatch(fetchOrigins())
@@ -50,6 +53,7 @@ export const Filter = () => {
                 max={maxPrice}
                 changePriceMin={onChangePriceMin}
                 onChangePriceMax={onChangePriceMax}
+                onFetchPRoduct={onFetchPRoduct}
               />
             </Form.Group>
             <Select

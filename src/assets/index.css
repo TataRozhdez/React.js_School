@@ -20,6 +20,7 @@ a,
   left: 0;
   bottom: 0;
   background-color: #0000008f;
+  animation: fade-in 1s linear;
 }
 
 .plug >  .spinner-border {
@@ -80,4 +81,13 @@ a,
 
 .w-10 {
   width: 10%;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

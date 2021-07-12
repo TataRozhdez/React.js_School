@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Container } from 'react-bootstrap'
+import { Container, Fade } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { fetchProducts } from '../bus/products/allProducts/thunks'
@@ -9,11 +9,7 @@ import {
   pageSelector,
   perPageSelector,
 } from '../bus/products/pagination/selectors'
-import {
-  maxPriceSelector,
-  minPriceSelector,
-  originSelectSelector,
-} from '../bus/products/filters/selectors'
+import { originSelectSelector } from '../bus/products/filters/selectors'
 
 import { CustomCard } from '../components/cards/CustomCard/CustomCard'
 import { CustomPagination } from '../components/CustomPagination/CustomPagination'
@@ -25,35 +21,27 @@ export const HomePage = () => {
   const productsData = useSelector(productsSelector)
   const page = useSelector(pageSelector)
   const perPage = useSelector(perPageSelector)
-  const minPrice = useSelector(minPriceSelector)
-  const maxPrice = useSelector(maxPriceSelector)
-  const originSelect = useSelector(originSelectSelector)
+  const origins = useSelector(originSelectSelector)
 
   const handleAddOrder = (id, name, price) => {
     dispatch(addOrder(id, name, price))
   }
 
-  const handleFetchProd = () => {
-    const origins = originSelect.reduce((acc, cur) => {
-      acc += `,${cur.value}`
-      return acc
-    }, '')
-    dispatch(fetchProducts({ page, perPage, minPrice, maxPrice, origins }))
-  }
-
   useEffect(() => {
-    handleFetchProd()
-  }, [minPrice, maxPrice, page, originSelect, perPage])
+    dispatch(fetchProducts())
+  }, [page, perPage, origins])
 
   return (
     <Container className="flex-column">
       <Filter />
-      <div className="d-flex flex-row flex-wrap mb-2">
-        {productsData &&
-          productsData.products.map((p) => (
-            <CustomCard key={p.id} {...p} handleAddOrder={handleAddOrder} />
-          ))}
-      </div>
+      <Fade in={!!productsData}>
+        <div className="d-flex flex-row flex-wrap mb-2">
+          {productsData &&
+            productsData.products.map((p) => (
+              <CustomCard key={p.id} {...p} handleAddOrder={handleAddOrder} />
+            ))}
+        </div>
+      </Fade>
       <div className="w-100 d-flex justify-content-end">
         <CustomPagination />
       </div>

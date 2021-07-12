@@ -10,8 +10,8 @@ const initialState = {
   minPrice: 0,
   maxPrice: 1000,
 
-  allOrigins: null,
-  originSelect: [],
+  origins: [],
+  allOrigins: [],
 }
 
 export const filtersReducer = createReducer(initialState, (builder) => {
@@ -26,7 +26,7 @@ export const filtersReducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeOrigin, (state, action) => {
       state.page = 1
-      state.originSelect = action.payload
+      state.origins = action.payload
     })
     .addCase(fetchOrigins.pending, (state) => {
       state.loading = true

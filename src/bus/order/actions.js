@@ -17,7 +17,7 @@ import {
 
 export const setOrder = createAction(SET_ORDER, () => {
   const orderLS = getLS(SHOPLAND_ORDERS)
-  const total = calcOrders(orderLS)
+  const total = calcOrders(orderLS || [])
 
   return {
     type: SET_ORDER,

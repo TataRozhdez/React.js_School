@@ -3,7 +3,13 @@ import PropTypes from 'prop-types'
 
 import './MultiRange.css'
 
-export const MultiRange = ({ min, max, changePriceMin, onChangePriceMax }) => {
+export const MultiRange = ({
+  min,
+  max,
+  changePriceMin,
+  onChangePriceMax,
+  onFetchPRoduct,
+}) => {
   const minValRef = useRef(min)
   const maxValRef = useRef(max)
   const range = useRef(null)
@@ -41,6 +47,7 @@ export const MultiRange = ({ min, max, changePriceMin, onChangePriceMax }) => {
         value={min}
         step="10"
         onChange={handleChangeMin}
+        onMouseOut={onFetchPRoduct}
         className="thumb thumb--left"
       />
       <input
@@ -50,9 +57,9 @@ export const MultiRange = ({ min, max, changePriceMin, onChangePriceMax }) => {
         value={max}
         step="10"
         onChange={handleChangeMax}
+        onMouseOut={onFetchPRoduct}
         className="thumb thumb--right"
       />
-
       <div className="slider">
         <div className="slider__track" />
         <div ref={range} className="slider__range" />
@@ -68,4 +75,5 @@ MultiRange.propTypes = {
   max: PropTypes.number.isRequired,
   changePriceMin: PropTypes.func.isRequired,
   onChangePriceMax: PropTypes.func.isRequired,
+  onFetchPRoduct: PropTypes.func.isRequired,
 }
