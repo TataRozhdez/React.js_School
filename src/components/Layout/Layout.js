@@ -1,35 +1,49 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Alert } from 'react-bootstrap'
 
-import { SHOPLAND_ORDERS } from '../../constants'
-import AppContext from '../../context/appContext'
 import { calcOrders } from '../../utils'
-import { getLS } from '../../utils/helpers/localStorage'
 import history from '../../services/history'
+import { orderSelector, totalSelector } from '../../bus/order/selectors'
+import {
+  errorProductSelector,
+  loadProductSelector,
+} from '../../bus/productId/selectors'
+import { setOrder, setTotal } from '../../bus/order/actions'
+import {
+  productsErrorSelector,
+  productsLoadingSelector,
+} from '../../bus/products/allProducts/selectors'
 
-import { CustomSpinner } from '../CustomSpinner/CustomSpinner'
 import { Header } from '../Header/Header'
+import { CustomSpinner } from '../CustomSpinner/CustomSpinner'
 
 export const Layout = ({ children }) => {
-  const appContext = useContext(AppContext)
+  const dispatch = useDispatch()
+
+  const order = useSelector(orderSelector)
+  const total = useSelector(totalSelector)
+
+  const loading = useSelector(productsLoadingSelector)
+  const error = useSelector(productsErrorSelector)
+
+  const loadProduct = useSelector(loadProductSelector)
+  const errorProduct = useSelector(errorProductSelector)
+
   const location = history.location.pathname
 
-  const ordersLS = getLS(SHOPLAND_ORDERS)
-
-  const { order, totalOrder, changeOrderList, loading, error, setTotalOrders } =
-    appContext
-
   useEffect(() => {
-    if (!order && ordersLS) changeOrderList(ordersLS)
-    if (order) setTotalOrders(calcOrders(order))
+    if (!order) dispatch(setOrder())
+    if (order) dispatch(setTotal(calcOrders(order)))
   }, [order])
 
   return (
     <div>
-      {loading && <CustomSpinner />}
+      {loading || (loadProduct && <CustomSpinner />)}
       {error && <Alert variant="danger">{error}</Alert>}
+      {errorProduct && <Alert variant="danger">{errorProduct}</Alert>}
 
-      <Header totalOrder={totalOrder} pathname={location} />
+      <Header totalOrder={total} pathname={location} />
       {children}
     </div>
   )

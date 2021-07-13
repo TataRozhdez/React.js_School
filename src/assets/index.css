@@ -20,6 +20,12 @@ a,
   left: 0;
   bottom: 0;
   background-color: #0000008f;
+  animation: fade-in 1s linear;
+}
+
+.plug >  .spinner-border {
+  width: 5rem;
+  height: 5rem;
 }
 
 .card {
@@ -53,6 +59,12 @@ a,
   padding-right: 0.1rem;
   min-width: 1.5rem;
   text-align: center;
+  cursor: default;
+}
+
+.form-control[readonly]:focus {
+  box-shadow: none;
+  border-color: #ced4da;
 }
 
 .badge-primary {
@@ -65,4 +77,17 @@ a,
   top: 6%;
   min-width: 23px;
   text-align: center;
+}
+
+.w-10 {
+  width: 10%;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

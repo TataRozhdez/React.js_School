@@ -1,11 +1,12 @@
-import { SHOPLAND_ORDERS } from '../../constants'
+import { sortForAlphabet } from '..'
+import { SHOPLAND_ORDERS } from '../../init/constants'
 
 export const getLS = (name) => JSON.parse(localStorage.getItem(name))
 
 export const setLS = (name, newLS) =>
   localStorage.setItem(name, JSON.stringify(newLS))
 
-export const prepareOrderList = (id, name, price) => {
+export const prepareOrderListADD = (id, name, price) => {
   const order = getLS(SHOPLAND_ORDERS)
 
   const productsLS = []
@@ -31,5 +32,35 @@ export const prepareOrderList = (id, name, price) => {
     ...restCart
   )
 
-  return productsLS
+  return sortForAlphabet(productsLS)
+}
+
+export const prepareOrderListRemove = (id, number) => {
+  const order = getLS(SHOPLAND_ORDERS)
+
+  const productsLS = []
+  const restCart = []
+
+  const arr = order.filter((item) => item.id !== id)
+  const item = order.find((c) => c.id === id)
+
+  restCart.push(...arr)
+
+  const newNumber = item.number - number
+
+  if (!newNumber) {
+    productsLS.push(...restCart)
+  } else {
+    productsLS.push(
+      {
+        id,
+        name: item.name,
+        price: item.price,
+        number: newNumber,
+      },
+      ...restCart
+    )
+  }
+
+  return sortForAlphabet(productsLS)
 }

@@ -1,13 +1,20 @@
-import React, { useContext } from 'react'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Container, Button } from 'react-bootstrap'
 
-import AppContext from '../context/appContext'
-
 import { CartCard } from '../components/cards/CartCard/CartCard'
+import { orderSelector, totalSelector } from '../bus/order/selectors'
+import { addOrder, removeOrder } from '../bus/order/actions'
 
 export const OrderPage = () => {
-  const appContext = useContext(AppContext)
-  const { order, totalOrder } = appContext
+  const dispatch = useDispatch()
+  const order = useSelector(orderSelector)
+  const total = useSelector(totalSelector)
+
+  const handleAddOrder = (id, name, price) =>
+    dispatch(addOrder(id, name, price))
+
+  const handleRemoveOrder = (id, number) => dispatch(removeOrder(id, number))
 
   return (
     <Container>
@@ -17,19 +24,19 @@ export const OrderPage = () => {
           order.map((o) => (
             <CartCard
               key={o.id}
-              name={o.name}
-              price={o.price}
-              number={o.number}
+              {...o}
+              addItem={handleAddOrder}
+              removeItem={handleRemoveOrder}
             />
           ))
         ) : (
           <h3>Please, add something to your cart</h3>
         )}
       </div>
-      {totalOrder && (
+      {total && (
         <div className="w-100 d-flex justify-content-end">
           <Button variant="success" disabled>
-            <h3 className="m-0">Total: {totalOrder.price}$</h3>
+            <h3 className="m-0">Total: {total.price}$</h3>
           </Button>
         </div>
       )}
