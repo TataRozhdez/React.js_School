@@ -1,7 +1,4 @@
-export const loadingFiltersSelector = (state) =>
-  state.products.filtersReducer.loading
-export const errorFiltersSelector = (state) =>
-  state.products.filtersReducer.error
+import { createSelector } from 'reselect'
 
 export const minPriceSelector = (state) =>
   state.products.filtersReducer.minPrice
@@ -12,3 +9,10 @@ export const allOriginsSelector = (state) =>
   state.products.filtersReducer.allOrigins
 export const originSelectSelector = (state) =>
   state.products.filtersReducer.origins
+
+export const getNameOrigin = createSelector([originSelectSelector], (origins) =>
+  origins.reduce((acc, cur) => {
+    if (!acc.length) return (acc += `${cur.value}`)
+    return (acc += `,${cur.value}`)
+  }, '')
+)

@@ -4,12 +4,17 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { fetchProducts } from '../bus/products/allProducts/thunks'
 import { productsSelector } from '../bus/products/allProducts/selectors'
+import {
+  maxPriceSelector,
+  minPriceSelector,
+  originSelectSelector,
+} from '../bus/products/filters/selectors'
 import { addOrder } from '../bus/order/actions'
 import {
   pageSelector,
   perPageSelector,
 } from '../bus/products/pagination/selectors'
-import { originSelectSelector } from '../bus/products/filters/selectors'
+import { changePage, changePerPage } from '../bus/products/pagination/actions'
 
 import { CustomCard } from '../components/cards/CustomCard/CustomCard'
 import { CustomPagination } from '../components/CustomPagination/CustomPagination'
@@ -21,15 +26,26 @@ export const HomePage = () => {
   const productsData = useSelector(productsSelector)
   const page = useSelector(pageSelector)
   const perPage = useSelector(perPageSelector)
+
+  const minPrice = useSelector(minPriceSelector)
+  const maxPrice = useSelector(maxPriceSelector)
   const origins = useSelector(originSelectSelector)
 
   const handleAddOrder = (id, name, price) => {
     dispatch(addOrder(id, name, price))
   }
 
+  const handleChangePage = (num) => dispatch(changePage(num))
+
+  const handleChangePerPage = (num) => dispatch(changePerPage(num))
+
   useEffect(() => {
     dispatch(fetchProducts())
   }, [page, perPage, origins])
+
+  useEffect(() => {
+    handleChangePage(1)
+  }, [origins, minPrice, maxPrice])
 
   return (
     <Container className="flex-column">
@@ -43,7 +59,13 @@ export const HomePage = () => {
         </div>
       </Fade>
       <div className="w-100 d-flex justify-content-end">
-        <CustomPagination />
+        <CustomPagination
+          dataArr={productsData}
+          page={page}
+          perPage={perPage}
+          onChangePage={handleChangePage}
+          onChangePerPage={handleChangePerPage}
+        />
       </div>
     </Container>
   )

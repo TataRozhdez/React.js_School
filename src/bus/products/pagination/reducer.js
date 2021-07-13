@@ -3,7 +3,7 @@ import { changePage, changePerPage } from './actions'
 
 const initialState = {
   page: 1,
-  perPage: 10,
+  perPage: '10',
 }
 
 export const paginationReducer = createReducer(initialState, (builder) => {

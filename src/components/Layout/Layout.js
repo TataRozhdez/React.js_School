@@ -5,6 +5,10 @@ import { Alert } from 'react-bootstrap'
 import { calcOrders } from '../../utils'
 import history from '../../services/history'
 import { orderSelector, totalSelector } from '../../bus/order/selectors'
+import {
+  errorProductSelector,
+  loadProductSelector,
+} from '../../bus/productId/selectors'
 import { setOrder, setTotal } from '../../bus/order/actions'
 import {
   productsErrorSelector,
@@ -19,8 +23,12 @@ export const Layout = ({ children }) => {
 
   const order = useSelector(orderSelector)
   const total = useSelector(totalSelector)
+
   const loading = useSelector(productsLoadingSelector)
   const error = useSelector(productsErrorSelector)
+
+  const loadProduct = useSelector(loadProductSelector)
+  const errorProduct = useSelector(errorProductSelector)
 
   const location = history.location.pathname
 
@@ -31,8 +39,9 @@ export const Layout = ({ children }) => {
 
   return (
     <div>
-      {loading && <CustomSpinner />}
+      {loading || (loadProduct && <CustomSpinner />)}
       {error && <Alert variant="danger">{error}</Alert>}
+      {errorProduct && <Alert variant="danger">{errorProduct}</Alert>}
 
       <Header totalOrder={total} pathname={location} />
       {children}

@@ -1,3 +1,4 @@
+import { sortForAlphabet } from '..'
 import { SHOPLAND_ORDERS } from '../../init/constants'
 
 export const getLS = (name) => JSON.parse(localStorage.getItem(name))
@@ -31,7 +32,7 @@ export const prepareOrderListADD = (id, name, price) => {
     ...restCart
   )
 
-  return productsLS
+  return sortForAlphabet(productsLS)
 }
 
 export const prepareOrderListRemove = (id, number) => {
@@ -61,5 +62,5 @@ export const prepareOrderListRemove = (id, number) => {
     )
   }
 
-  return productsLS
+  return sortForAlphabet(productsLS)
 }

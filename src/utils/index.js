@@ -35,3 +35,6 @@ export const prepareListSelect = (arr) => {
   }, [])
   return newArr
 }
+
+export const sortForAlphabet = (arr) =>
+  arr.sort((a, b) => a.name.localeCompare(b.name))
