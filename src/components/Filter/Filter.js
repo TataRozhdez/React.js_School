@@ -4,7 +4,6 @@ import { Form, Button, Accordion } from 'react-bootstrap'
 import { List } from 'react-bootstrap-icons'
 import Select from 'react-select'
 
-import { MultiRange } from '../MultiRange/MultiRange'
 import { fetchOrigins } from '../../bus/products/filters/thunks'
 import {
   allOriginsSelector,
@@ -19,6 +18,8 @@ import {
 } from '../../bus/products/filters/actions'
 import { fetchProducts } from '../../bus/products/allProducts/thunks'
 
+import { MultiRange } from '../MultiRange/MultiRange'
+
 export const Filter = () => {
   const dispatch = useDispatch()
 
@@ -28,13 +29,15 @@ export const Filter = () => {
   const allOrigins = useSelector(allOriginsSelector)
 
   const onChangePriceMin = (value) => dispatch(changePriceMin(value))
+
   const onChangePriceMax = (value) => dispatch(changePriceMax(value))
+
   const onChangeOrigin = (value) => dispatch(changeOrigin(value))
 
-  const onFetchPRoduct = () => dispatch(fetchProducts())
+  const onFetchProducts = () => dispatch(fetchProducts())
 
   useEffect(() => {
-    !allOrigins && dispatch(fetchOrigins())
+    !allOrigins.length && dispatch(fetchOrigins())
   }, [])
 
   return (
@@ -53,7 +56,7 @@ export const Filter = () => {
                 max={maxPrice}
                 changePriceMin={onChangePriceMin}
                 onChangePriceMax={onChangePriceMax}
-                onFetchPRoduct={onFetchPRoduct}
+                onFetchProducts={onFetchProducts}
               />
             </Form.Group>
             <Select

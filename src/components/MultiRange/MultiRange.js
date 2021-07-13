@@ -8,7 +8,7 @@ export const MultiRange = ({
   max,
   changePriceMin,
   onChangePriceMax,
-  onFetchPRoduct,
+  onFetchProducts,
 }) => {
   const minValRef = useRef(min)
   const maxValRef = useRef(max)
@@ -47,7 +47,7 @@ export const MultiRange = ({
         value={min}
         step="10"
         onChange={handleChangeMin}
-        onMouseOut={onFetchPRoduct}
+        onMouseOut={onFetchProducts}
         className="thumb thumb--left"
       />
       <input
@@ -57,7 +57,7 @@ export const MultiRange = ({
         value={max}
         step="10"
         onChange={handleChangeMax}
-        onMouseOut={onFetchPRoduct}
+        onMouseOut={onFetchProducts}
         className="thumb thumb--right"
       />
       <div className="slider">
@@ -75,5 +75,5 @@ MultiRange.propTypes = {
   max: PropTypes.number.isRequired,
   changePriceMin: PropTypes.func.isRequired,
   onChangePriceMax: PropTypes.func.isRequired,
-  onFetchPRoduct: PropTypes.func.isRequired,
+  onFetchProducts: PropTypes.func.isRequired,
 }

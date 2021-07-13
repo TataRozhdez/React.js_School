@@ -17,15 +17,12 @@ const initialState = {
 export const filtersReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changePriceMin, (state, action) => {
-      state.page = 1
       state.minPrice = action.payload
     })
     .addCase(changePriceMax, (state, action) => {
-      state.page = 1
       state.maxPrice = action.payload
     })
     .addCase(changeOrigin, (state, action) => {
-      state.page = 1
       state.origins = action.payload
     })
     .addCase(fetchOrigins.pending, (state) => {

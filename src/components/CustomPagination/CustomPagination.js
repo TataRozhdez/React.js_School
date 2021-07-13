@@ -1,32 +1,22 @@
 import React, { useMemo } from 'react'
+import PropTypes from 'prop-types'
 import { Pagination, Form } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
 
 import { getArrayByNumber } from '../../utils'
-import { productsSelector } from '../../bus/products/allProducts/selectors'
-import { fetchProducts } from '../../bus/products/allProducts/thunks'
-import {
-  changePage,
-  changePerPage,
-} from '../../bus/products/pagination/actions'
-import {
-  pageSelector,
-  perPageSelector,
-} from '../../bus/products/pagination/selectors'
 
-export const CustomPagination = () => {
-  const dispatch = useDispatch()
-
-  const productsData = useSelector(productsSelector)
-  const page = useSelector(pageSelector)
-  const perPage = useSelector(perPageSelector)
-
+export const CustomPagination = ({
+  dataArr,
+  page,
+  perPage,
+  onChangePage,
+  onChangePerPage,
+}) => {
   const pagesCount = useMemo(() => {
-    if (!productsData || !perPage) {
+    if (!dataArr || !perPage) {
       return 0
     }
-    return Math.ceil(productsData.total / perPage)
-  }, [productsData, perPage])
+    return Math.ceil(dataArr.total / perPage)
+  }, [dataArr, perPage])
 
   const pagesItems = useMemo(() => {
     if (pagesCount < 3) {
@@ -61,18 +51,7 @@ export const CustomPagination = () => {
         break
     }
     return arr
-  }, [page, pagesCount, productsData])
-
-  const handleChangePage = (num) => {
-    dispatch(fetchProducts({ page: num, perPage }))
-    dispatch(changePage(num))
-  }
-
-  const handleChangePerPage = (e) => {
-    const value = e.target.value
-
-    dispatch(changePerPage(value))
-  }
+  }, [page, pagesCount, dataArr])
 
   return (
     <div className="w-100 d-flex flex-row justify-content-end align-items-center mb-3">
@@ -82,7 +61,7 @@ export const CustomPagination = () => {
             as="select"
             className="w-10 me-3"
             value={perPage}
-            onChange={handleChangePerPage}
+            onChange={(e) => onChangePerPage(e.target.value)}
           >
             <option value="10">10</option>
             <option value="15">15</option>
@@ -90,9 +69,7 @@ export const CustomPagination = () => {
           </Form.Control>
 
           <Pagination className="m-0">
-            {page > 1 && (
-              <Pagination.First onClick={() => handleChangePage(1)} />
-            )}
+            {page > 1 && <Pagination.First onClick={() => onChangePage(1)} />}
             {pagesItems.map((p) => {
               if (p === 0.111) {
                 return (
@@ -103,20 +80,26 @@ export const CustomPagination = () => {
                 <Pagination.Item
                   key={`pagination_${p}`}
                   active={p === page}
-                  onClick={() => handleChangePage(p)}
+                  onClick={() => onChangePage(p)}
                 >
                   {p}
                 </Pagination.Item>
               )
             })}
             {pagesItems && page < pagesCount - 1 && (
-              <Pagination.Last
-                onClick={() => handleChangePage(pagesCount - 1)}
-              />
+              <Pagination.Last onClick={() => onChangePage(pagesCount - 1)} />
             )}
           </Pagination>
         </React.Fragment>
       )}
     </div>
   )
+}
+
+CustomPagination.propTypes = {
+  page: PropTypes.number.isRequired,
+  perPage: PropTypes.string.isRequired,
+  onChangePage: PropTypes.func.isRequired,
+  onChangePerPage: PropTypes.func.isRequired,
+  data: PropTypes.array,
 }

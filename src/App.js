@@ -6,14 +6,12 @@ import { store } from './init/store'
 import history from './services/history'
 import { Routes } from './routes'
 
-const App = () => {
-  return (
-    <Provider store={store}>
-      <Router history={history}>
-        <Routes />
-      </Router>
-    </Provider>
-  )
-}
+const App = () => (
+  <Provider store={store}>
+    <Router history={history}>
+      <Routes />
+    </Router>
+  </Provider>
+)
 
 export default App

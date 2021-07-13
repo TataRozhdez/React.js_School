@@ -1,20 +1,34 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Container, Button } from 'react-bootstrap'
 
 import { CartCard } from '../components/cards/CartCard/CartCard'
 import { orderSelector, totalSelector } from '../bus/order/selectors'
+import { addOrder, removeOrder } from '../bus/order/actions'
 
 export const OrderPage = () => {
+  const dispatch = useDispatch()
   const order = useSelector(orderSelector)
   const total = useSelector(totalSelector)
+
+  const handleAddOrder = (id, name, price) =>
+    dispatch(addOrder(id, name, price))
+
+  const handleRemoveOrder = (id, number) => dispatch(removeOrder(id, number))
 
   return (
     <Container>
       <h1 className="text-primary mb-4">Shopping Cart</h1>
       <div className="mb-3 d-flex flex-row flex-wrap">
         {order ? (
-          order.map((o) => <CartCard key={o.id} {...o} />)
+          order.map((o) => (
+            <CartCard
+              key={o.id}
+              {...o}
+              addItem={handleAddOrder}
+              removeItem={handleRemoveOrder}
+            />
+          ))
         ) : (
           <h3>Please, add something to your cart</h3>
         )}
