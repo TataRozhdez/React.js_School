@@ -5,12 +5,7 @@ import { List } from 'react-bootstrap-icons'
 import Select from 'react-select'
 
 import { fetchOrigins } from '../../bus/products/filters/thunks'
-import {
-  allOriginsSelector,
-  maxPriceSelector,
-  minPriceSelector,
-  originSelectSelector,
-} from '../../bus/products/filters/selectors'
+import { getFilters } from '../../bus/products/filters/selectors'
 import {
   changeOrigin,
   changePriceMax,
@@ -23,10 +18,7 @@ import { MultiRange } from '../MultiRange/MultiRange'
 export const Filter = () => {
   const dispatch = useDispatch()
 
-  const minPrice = useSelector(minPriceSelector)
-  const maxPrice = useSelector(maxPriceSelector)
-  const origin = useSelector(originSelectSelector)
-  const allOrigins = useSelector(allOriginsSelector)
+  const { minPrice, maxPrice, origin, allOrigins } = useSelector(getFilters)
 
   const onChangePriceMin = (value) => dispatch(changePriceMin(value))
 

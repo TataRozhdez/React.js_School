@@ -11,14 +11,14 @@ export const fetchProducts = createAsyncThunk(GET_PRODUCTS, async () => {
   const { minPrice, maxPrice } = state.products.filtersReducer
   const { page, perPage } = state.products.paginationReducer
 
-  const nameOrigins = getNameOrigin(state)
+  const origins = getNameOrigin(state)
 
   const response = await getProductsApi({
     page,
     perPage,
     minPrice,
     maxPrice,
-    origins: nameOrigins,
+    origins,
   })
 
   return response

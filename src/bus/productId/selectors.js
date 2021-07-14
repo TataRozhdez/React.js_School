@@ -1,4 +1,9 @@
-export const loadProductSelector = (state) => state.productId.loading
-export const errorProductSelector = (state) => state.productId.error
+import {createSelector} from "reselect";
 
-export const productIdSelector = (state) => state.productId.product
+const getProductState = (state) => state.productId
+
+export const getProduct = createSelector(
+    getProductState,
+    ({ loading, error, product }) => ({ loading, error, product })
+)
+

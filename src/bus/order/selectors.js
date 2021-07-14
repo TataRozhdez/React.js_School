@@ -1,2 +1,13 @@
-export const orderSelector = (state) => state.orders.order
-export const totalSelector = (state) => state.orders.total
+import {createSelector} from "reselect";
+
+const getOrderState = (state) => state.orders
+
+export const getOrder = createSelector(
+    getOrderState,
+    orders => orders.order
+)
+
+export const getOrderTotal = createSelector(
+    getOrderState,
+    orders => orders.total
+)
