@@ -26,6 +26,9 @@ export const Layout = ({ children }) => {
   const loadProduct = useSelector(loadProductSelector)
   const errorProduct = useSelector(errorProductSelector)
 
+  const loadProduct = useSelector(loadProductSelector)
+  const errorProduct = useSelector(errorProductSelector)
+
   const location = history.location.pathname
 
   useEffect(() => {
