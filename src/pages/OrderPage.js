@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Container, Button } from 'react-bootstrap'
 
 import { CartCard } from '../components/cards/CartCard/CartCard'
-import { orderSelector, totalSelector } from '../bus/order/selectors'
+import {getOrder, getOrderTotal} from '../bus/order/selectors'
 import { addOrder, removeOrder } from '../bus/order/actions'
 
 export const OrderPage = () => {
   const dispatch = useDispatch()
-  const order = useSelector(orderSelector)
-  const total = useSelector(totalSelector)
+  const order = useSelector(getOrder)
+  const total = useSelector(getOrderTotal)
 
   const handleAddOrder = (id, name, price) =>
     dispatch(addOrder(id, name, price))

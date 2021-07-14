@@ -3,7 +3,7 @@ import { Container, Fade } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { fetchProducts } from '../bus/products/allProducts/thunks'
-import { allProdSelector } from '../bus/products/allProducts/selectors'
+import { getProducts} from '../bus/products/allProducts/selectors'
 import { getFilters } from '../bus/products/filters/selectors'
 import { addOrder } from '../bus/order/actions'
 import { paginationSelector } from '../bus/products/pagination/selectors'
@@ -16,7 +16,7 @@ import { Filter } from '../components/Filter/Filter'
 export const HomePage = () => {
   const dispatch = useDispatch()
 
-  const { productsData } = useSelector(allProdSelector)
+  const { products } = useSelector(getProducts)
   const { page, perPage } = useSelector(paginationSelector)
 
   const { minPrice, maxPrice, origins } = useSelector(getFilters)
@@ -40,17 +40,17 @@ export const HomePage = () => {
   return (
     <Container className="flex-column">
       <Filter />
-      <Fade in={!!productsData}>
+      <Fade in={!!products}>
         <div className="d-flex flex-row flex-wrap mb-2">
-          {productsData &&
-            productsData.products.map((p) => (
+          {products &&
+          products.map((p) => (
               <CustomCard key={p.id} {...p} handleAddOrder={handleAddOrder} />
             ))}
         </div>
       </Fade>
       <div className="w-100 d-flex justify-content-end">
         <CustomPagination
-          dataArr={productsData}
+          dataArr={products}
           page={page}
           perPage={perPage}
           onChangePage={handleChangePage}

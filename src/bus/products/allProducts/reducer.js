@@ -5,7 +5,8 @@ import { fetchProducts } from './thunks'
 const initialState = {
   loading: false,
   error: null,
-  productsData: null,
+  products: null,
+  total: 0,
 }
 
 export const allProductsReducer = createReducer(initialState, (builder) => {
@@ -14,8 +15,11 @@ export const allProductsReducer = createReducer(initialState, (builder) => {
       state.loading = true
     })
     .addCase(fetchProducts.fulfilled, (state, action) => {
+      const { products, total } = action.payload
+
       state.loading = false
-      state.productsData = action.payload
+      state.products = products
+      state.total = total
     })
     .addCase(fetchProducts.rejected, (state, action) => {
       state.loading = false

@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect'
 
-const allProductsReducer = (state) => state.products.allProductsReducer
+const getProductsState = (state) => state.products.allProductsReducer
 
-export const allProdSelector = createSelector(
-  [allProductsReducer],
-  (data) => data
+export const getProducts = createSelector(
+    getProductsState,
+  ({ loading, error, products }) => ({ loading, error, products })
 )

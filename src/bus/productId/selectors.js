@@ -1,7 +1,9 @@
-import { selectorCreate } from '../helpers'
+import {createSelector} from "reselect";
 
-const productSelector = (state) => state.productId
+const getProductState = (state) => state.productId
 
-export const loadProductSelector = selectorCreate(productSelector, 'loading')
-export const errorProductSelector = selectorCreate(productSelector, 'error')
-export const productIdSelector = selectorCreate(productSelector, 'product')
+export const getProduct = createSelector(
+    getProductState,
+    ({ loading, error, product }) => ({ loading, error, product })
+)
+

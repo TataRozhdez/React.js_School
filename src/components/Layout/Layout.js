@@ -2,15 +2,14 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Alert } from 'react-bootstrap'
 
-import { calcOrders } from '../../utils'
 import history from '../../services/history'
-import { orderSelector, totalSelector } from '../../bus/order/selectors'
-import {
-  errorProductSelector,
-  loadProductSelector,
-} from '../../bus/productId/selectors'
+import { calcOrders } from '../../utils'
+
+import { getProduct } from '../../bus/productId/selectors'
+import { getOrder, getOrderTotal } from '../../bus/order/selectors'
+import { getProducts } from '../../bus/products/allProducts/selectors'
+
 import { setOrder, setTotal } from '../../bus/order/actions'
-import { allProdSelector } from '../../bus/products/allProducts/selectors'
 
 import { Header } from '../Header/Header'
 import { CustomSpinner } from '../CustomSpinner/CustomSpinner'
@@ -18,29 +17,25 @@ import { CustomSpinner } from '../CustomSpinner/CustomSpinner'
 export const Layout = ({ children }) => {
   const dispatch = useDispatch()
 
-  const order = useSelector(orderSelector)
-  const total = useSelector(totalSelector)
+  const order = useSelector(getOrder)
+  const total = useSelector(getOrderTotal)
 
-  const { loading, error } = useSelector(allProdSelector)
-
-  const loadProduct = useSelector(loadProductSelector)
-  const errorProduct = useSelector(errorProductSelector)
-
-  const loadProduct = useSelector(loadProductSelector)
-  const errorProduct = useSelector(errorProductSelector)
+  const productsFetch = useSelector(getProducts)
+  const productFetch = useSelector(getProduct)
 
   const location = history.location.pathname
 
   useEffect(() => {
-    if (!order) dispatch(setOrder())
-    if (order) dispatch(setTotal(calcOrders(order)))
+    if (!order) return dispatch(setOrder())
+
+    dispatch(setTotal(calcOrders(order)))
   }, [order])
 
   return (
     <div>
-      {loading || (loadProduct && <CustomSpinner />)}
-      {error && <Alert variant="danger">{error}</Alert>}
-      {errorProduct && <Alert variant="danger">{errorProduct}</Alert>}
+      {productsFetch.loading || (productFetch.loading && <CustomSpinner />)}
+      {productsFetch.error && <Alert variant="danger">{productsFetch.error}</Alert>}
+      {productFetch.error && <Alert variant="danger">{productFetch.error}</Alert>}
 
       <Header totalOrder={total} pathname={location} />
       {children}

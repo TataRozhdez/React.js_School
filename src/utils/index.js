@@ -7,6 +7,7 @@ export const getArrayByNumber = (number) => {
   return arr
 }
 
+// TODO rewrite to reduce
 export const calcOrders = (arr) => {
   let num = 0
   let price = 0
@@ -25,7 +26,7 @@ export const calcOrders = (arr) => {
 }
 
 export const prepareListSelect = (arr) => {
-  const newArr = arr.reduce((acc, cur) => {
+  return arr.reduce((acc, cur) => {
     acc.push({
       value: cur.value,
       label: cur.displayName,
@@ -33,7 +34,6 @@ export const prepareListSelect = (arr) => {
 
     return acc
   }, [])
-  return newArr
 }
 
 export const sortForAlphabet = (arr) =>

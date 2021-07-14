@@ -6,9 +6,6 @@ import { getLS, setLS } from '../../utils/helpers/localStorage'
 import { setTotal, addOrder, setOrder, removeOrder } from './actions'
 
 const initialState = {
-  loading: false,
-  error: null,
-
   order: null,
   total: null,
 }

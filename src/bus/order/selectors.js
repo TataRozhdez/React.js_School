@@ -1,6 +1,13 @@
-import { selectorCreate } from '../helpers'
+import {createSelector} from "reselect";
 
-const ordersAllSelector = (state) => state.orders
+const getOrderState = (state) => state.orders
 
-export const orderSelector = selectorCreate(ordersAllSelector, 'order')
-export const totalSelector = selectorCreate(ordersAllSelector, 'total')
+export const getOrder = createSelector(
+    getOrderState,
+    orders => orders.order
+)
+
+export const getOrderTotal = createSelector(
+    getOrderState,
+    orders => orders.total
+)
