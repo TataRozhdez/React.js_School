@@ -10,10 +10,7 @@ import {
   loadProductSelector,
 } from '../../bus/productId/selectors'
 import { setOrder, setTotal } from '../../bus/order/actions'
-import {
-  productsErrorSelector,
-  productsLoadingSelector,
-} from '../../bus/products/allProducts/selectors'
+import { allProdSelector } from '../../bus/products/allProducts/selectors'
 
 import { Header } from '../Header/Header'
 import { CustomSpinner } from '../CustomSpinner/CustomSpinner'
@@ -24,8 +21,7 @@ export const Layout = ({ children }) => {
   const order = useSelector(orderSelector)
   const total = useSelector(totalSelector)
 
-  const loading = useSelector(productsLoadingSelector)
-  const error = useSelector(productsErrorSelector)
+  const { loading, error } = useSelector(allProdSelector)
 
   const loadProduct = useSelector(loadProductSelector)
   const errorProduct = useSelector(errorProductSelector)

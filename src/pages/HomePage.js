@@ -3,17 +3,10 @@ import { Container, Fade } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { fetchProducts } from '../bus/products/allProducts/thunks'
-import { productsSelector } from '../bus/products/allProducts/selectors'
-import {
-  maxPriceSelector,
-  minPriceSelector,
-  originSelectSelector,
-} from '../bus/products/filters/selectors'
+import { allProdSelector } from '../bus/products/allProducts/selectors'
+import { getFilters } from '../bus/products/filters/selectors'
 import { addOrder } from '../bus/order/actions'
-import {
-  pageSelector,
-  perPageSelector,
-} from '../bus/products/pagination/selectors'
+import { paginationSelector } from '../bus/products/pagination/selectors'
 import { changePage, changePerPage } from '../bus/products/pagination/actions'
 
 import { CustomCard } from '../components/cards/CustomCard/CustomCard'
@@ -23,13 +16,10 @@ import { Filter } from '../components/Filter/Filter'
 export const HomePage = () => {
   const dispatch = useDispatch()
 
-  const productsData = useSelector(productsSelector)
-  const page = useSelector(pageSelector)
-  const perPage = useSelector(perPageSelector)
+  const { productsData } = useSelector(allProdSelector)
+  const { page, perPage } = useSelector(paginationSelector)
 
-  const minPrice = useSelector(minPriceSelector)
-  const maxPrice = useSelector(maxPriceSelector)
-  const origins = useSelector(originSelectSelector)
+  const { minPrice, maxPrice, origins } = useSelector(getFilters)
 
   const handleAddOrder = (id, name, price) => {
     dispatch(addOrder(id, name, price))

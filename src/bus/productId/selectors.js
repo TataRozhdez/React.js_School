@@ -1,4 +1,7 @@
-export const loadProductSelector = (state) => state.productId.loading
-export const errorProductSelector = (state) => state.productId.error
+import { selectorCreate } from '../helpers'
 
-export const productIdSelector = (state) => state.productId.product
+const productSelector = (state) => state.productId
+
+export const loadProductSelector = selectorCreate(productSelector, 'loading')
+export const errorProductSelector = selectorCreate(productSelector, 'error')
+export const productIdSelector = selectorCreate(productSelector, 'product')

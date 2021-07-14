@@ -23,7 +23,7 @@ export const ProductPage = () => {
   }, [])
 
   return (
-    <Container>
+    <Container className="fade-in">
       {product && <ProductCard {...product} handleAddOrder={handleAddOrder} />}
     </Container>
   )
