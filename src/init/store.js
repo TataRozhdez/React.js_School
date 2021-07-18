@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import { productIdReducer } from '../bus/productId/reducers'
-import { orderReducer } from '../bus/order/reducers'
-import { productReducer } from '../bus/products/reducer'
+import { productId } from '../bus/productId/reducers'
+import { order } from '../bus/order/reducers'
+import { products } from '../bus/products/reducer'
+import { uploadModal } from '../bus/uploadModal/reducers'
 
 export const store = configureStore({
   reducer: {
-    products: productReducer,
-    orders: orderReducer,
-    productId: productIdReducer,
+    products,
+    order,
+    productId,
+    uploadModal,
   },
 })

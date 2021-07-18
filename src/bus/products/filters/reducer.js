@@ -14,7 +14,7 @@ const initialState = {
   allOrigins: [],
 }
 
-export const filtersReducer = createReducer(initialState, (builder) => {
+export const filters = createReducer(initialState, (builder) => {
   builder
     .addCase(changePriceMin, (state, action) => {
       state.minPrice = action.payload

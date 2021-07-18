@@ -1,24 +1,25 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Button, Accordion } from 'react-bootstrap'
+import { Form, Button, Accordion, Spinner } from 'react-bootstrap'
 import { List } from 'react-bootstrap-icons'
 import Select from 'react-select'
 
 import { fetchOrigins } from '../../bus/products/filters/thunks'
 import { getFilters } from '../../bus/products/filters/selectors'
+import { fetchProducts } from '../../bus/products/allProducts/thunks'
 import {
   changeOrigin,
   changePriceMax,
   changePriceMin,
 } from '../../bus/products/filters/actions'
-import { fetchProducts } from '../../bus/products/allProducts/thunks'
 
 import { MultiRange } from '../MultiRange/MultiRange'
 
 export const Filter = () => {
   const dispatch = useDispatch()
 
-  const { minPrice, maxPrice, origin, allOrigins } = useSelector(getFilters)
+  const { minPrice, maxPrice, origin, allOrigins, loading } =
+    useSelector(getFilters)
 
   const onChangePriceMin = (value) => dispatch(changePriceMin(value))
 
@@ -36,7 +37,11 @@ export const Filter = () => {
     <Form className="mb-2">
       <Accordion>
         <Accordion.Toggle as={Button} variant="light" eventKey="0">
-          <List />
+          {loading ? (
+            <Spinner animation="border" variant="info" size="sm" />
+          ) : (
+            <List />
+          )}
         </Accordion.Toggle>
 
         <Accordion.Collapse eventKey="0">
@@ -55,7 +60,7 @@ export const Filter = () => {
               options={allOrigins}
               value={origin}
               onChange={(value) => onChangeOrigin(value)}
-              className="w-50"
+              className="w-50 z-10"
               isMulti
             />
           </div>

@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux'
 
-import { filtersReducer } from './filters/reducer'
-import { allProductsReducer } from './allProducts/reducer'
-import { paginationReducer } from './pagination/reducer'
+import { filters } from './filters/reducer'
+import { allProducts } from './allProducts/reducer'
+import { pagination } from './pagination/reducer'
+import { uploaded } from './uploaded/reducer'
 
-export const productReducer = combineReducers({
-  filtersReducer,
-  allProductsReducer,
-  paginationReducer,
+export const products = combineReducers({
+  filters,
+  allProducts,
+  pagination,
+  uploaded,
 })

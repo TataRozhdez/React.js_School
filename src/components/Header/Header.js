@@ -1,36 +1,55 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Navbar, Badge } from 'react-bootstrap'
-import { Cart2 } from 'react-bootstrap-icons'
-import { HouseDoor } from 'react-bootstrap-icons'
+import { Navbar, Badge, Button } from 'react-bootstrap'
+import { Cart2, HouseDoor, Inboxes, Bookmarks } from 'react-bootstrap-icons'
 
+import { OverlayLinkBtn } from '../OverlayLinkBtn/OverlayLinkBtn'
 import Logo from '../../assets/logo.png'
 
-export const Header = ({ totalOrder, pathname }) => (
+export const Header = ({ totalOrder, pathname, onUploadedVisible }) => (
   <Navbar bg="light" className="nav mb-2 d-flex  justify-content-between">
-    <Navbar.Brand href="/">
-      <img src={Logo} alt="Shopland" />
-    </Navbar.Brand>
+    <div>
+      <Navbar.Brand href="/">
+        <img src={Logo} alt="Shopland" />
+      </Navbar.Brand>
+      <Button variant="outline-success px-1" onClick={onUploadedVisible}>
+        + Upload product
+      </Button>
+    </div>
+
     <div className="d-flex flex-row">
-      {pathname !== '/' && (
-        <Link to="/" className="d-flex align-items-center nav-link">
-          <HouseDoor className="me-4" size="24" />
-        </Link>
-      )}
-      {pathname !== '/cart' && (
-        <Link
-          to="/cart"
-          className="d-flex align-items-center position-relative nav-link"
-        >
-          <Cart2 className="me-4" size="24" />
-          {totalOrder && (
-            <Badge pill variant="primary" as="small">
-              {totalOrder.number}
-            </Badge>
-          )}
-        </Link>
-      )}
+      <OverlayLinkBtn tooltip="Home" path="/" disabled={pathname === '/'}>
+        <HouseDoor size="22" />
+      </OverlayLinkBtn>
+
+      <OverlayLinkBtn
+        tooltip="Uploaded products"
+        path="/products/uploaded"
+        disabled={pathname === '/products/uploaded'}
+      >
+        <Inboxes size="22" />
+      </OverlayLinkBtn>
+
+      <OverlayLinkBtn
+        tooltip="History of orders"
+        path="/archive"
+        disabled={pathname === '/archive'}
+      >
+        <Bookmarks size="22" />
+      </OverlayLinkBtn>
+
+      <OverlayLinkBtn
+        tooltip="Cart"
+        path="/cart"
+        disabled={pathname === '/cart'}
+      >
+        <Cart2 className="me-4" size="25" />
+        {totalOrder && pathname !== '/cart' && (
+          <Badge pill variant="primary" as="small">
+            {totalOrder.number}
+          </Badge>
+        )}
+      </OverlayLinkBtn>
     </div>
   </Navbar>
 )
@@ -38,4 +57,5 @@ export const Header = ({ totalOrder, pathname }) => (
 Header.propTypes = {
   totalOrder: PropTypes.object,
   pathname: PropTypes.string.isRequired,
+  onUploadedVisible: PropTypes.func.isRequired,
 }

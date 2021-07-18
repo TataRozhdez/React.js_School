@@ -5,23 +5,20 @@ import { Pagination, Form } from 'react-bootstrap'
 import { getArrayByNumber } from '../../utils'
 
 export const CustomPagination = ({
-  dataArr,
+  total,
   page,
   perPage,
   onChangePage,
   onChangePerPage,
 }) => {
   const pagesCount = useMemo(() => {
-    if (!dataArr || !perPage) {
-      return 0
-    }
-    return Math.ceil(dataArr.total / perPage)
-  }, [dataArr, perPage])
+    if (!total || !perPage) return 0
+
+    return Math.ceil(total / perPage)
+  }, [total, perPage])
 
   const pagesItems = useMemo(() => {
-    if (pagesCount < 3) {
-      return getArrayByNumber(pagesCount)
-    }
+    if (pagesCount < 3) return getArrayByNumber(pagesCount)
 
     const prev = page - 1
     const next = page + 1
@@ -51,7 +48,7 @@ export const CustomPagination = ({
         break
     }
     return arr
-  }, [page, pagesCount, dataArr])
+  }, [page, pagesCount, total])
 
   return (
     <div className="w-100 d-flex flex-row justify-content-end align-items-center mb-3">
@@ -101,5 +98,5 @@ CustomPagination.propTypes = {
   perPage: PropTypes.string.isRequired,
   onChangePage: PropTypes.func.isRequired,
   onChangePerPage: PropTypes.func.isRequired,
-  data: PropTypes.array,
+  total: PropTypes.number,
 }

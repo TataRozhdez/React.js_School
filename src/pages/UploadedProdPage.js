@@ -2,30 +2,25 @@ import React, { useEffect } from 'react'
 import { Container, Alert } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { fetchProducts } from '../bus/products/allProducts/thunks'
-import { getProducts } from '../bus/products/allProducts/selectors'
 import { getFilters } from '../bus/products/filters/selectors'
-import { addOrder } from '../bus/order/newOrder/actions'
 import { paginationSelector } from '../bus/products/pagination/selectors'
 import { changePage, changePerPage } from '../bus/products/pagination/actions'
 import { onVisibleUpload, setDataUpload } from '../bus/uploadModal/actions'
+import { getUploads } from '../bus/products/uploaded/selectors'
+import { fetchUploads } from '../bus/products/uploaded/thunks'
 
 import { CustomCard } from '../components/cards/CustomCard/CustomCard'
 import { CustomPagination } from '../components/CustomPagination/CustomPagination'
 import { Filter } from '../components/Filter/Filter'
 import { CustomSpinner } from '../components/CustomSpinner/CustomSpinner'
 
-export const HomePage = () => {
+export const UploadedProdPage = () => {
   const dispatch = useDispatch()
 
-  const { products, total, loading, error } = useSelector(getProducts)
+  const { uploads, loading, error, total } = useSelector(getUploads)
   const { page, perPage } = useSelector(paginationSelector)
 
   const { minPrice, maxPrice, origins } = useSelector(getFilters)
-
-  const handleAddOrder = (id, name, price) => {
-    dispatch(addOrder(id, name, price))
-  }
 
   const handleChangePage = (num) => dispatch(changePage(num))
 
@@ -37,7 +32,7 @@ export const HomePage = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchProducts())
+    dispatch(fetchUploads())
   }, [page, perPage, origins])
 
   useEffect(() => {
@@ -48,26 +43,26 @@ export const HomePage = () => {
     <Container className="flex-column fade-in">
       {loading && <CustomSpinner />}
       {error && <Alert variant="danger">{error}</Alert>}
+
       <Filter />
+
       <div className="d-flex flex-row flex-wrap mb-2">
-        {products &&
-          products.map((p) => (
-            <CustomCard
-              key={p.id}
-              {...p}
-              handleAddOrder={handleAddOrder}
-              handleEdit={handleEditProduct}
-            />
+        {uploads &&
+          uploads.map((p) => (
+            <CustomCard key={p.id} {...p} handleEdit={handleEditProduct} />
           ))}
       </div>
+
       <div className="w-100 d-flex justify-content-end">
-        <CustomPagination
-          total={total}
-          page={page}
-          perPage={perPage}
-          onChangePage={handleChangePage}
-          onChangePerPage={handleChangePerPage}
-        />
+        {uploads && (
+          <CustomPagination
+            total={total}
+            page={page}
+            perPage={perPage}
+            onChangePage={handleChangePage}
+            onChangePerPage={handleChangePerPage}
+          />
+        )}
       </div>
     </Container>
   )

@@ -6,7 +6,7 @@ const initialState = {
   perPage: '10',
 }
 
-export const paginationReducer = createReducer(initialState, (builder) => {
+export const pagination = createReducer(initialState, (builder) => {
   builder
     .addCase(changePage, (state, action) => {
       state.page = action.payload
