@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { getArchive } from '../bus/order/archive/selectors'
 import { fetchOrders } from '../bus/order/archive/thunks'
+import { dateFormat } from '../utils'
 
 import { CustomSpinner } from '../components/CustomSpinner/CustomSpinner'
-import { LinkListItem } from '../components/LinkListItem/LinkListItem'
+import { LinkListItem } from '../components/links/LinkListItem/LinkListItem'
+import { TableOrder } from '../components/TableOrder/TableOrder'
 
 export const ArchivePage = () => {
   const dispatch = useDispatch()
@@ -22,11 +24,19 @@ export const ArchivePage = () => {
       {error && <Alert variant="danger">{error}</Alert>}
 
       {archive && archive.length ? (
-        <ListGroup>
-          {archive.map((a) => (
-            <LinkListItem key={a.id} link={a.id} {...a} />
-          ))}
-        </ListGroup>
+        <React.Fragment>
+          <ListGroup>
+            {archive.map((a) => (
+              <LinkListItem
+                key={a.id}
+                link={`/archive/${a.id}`}
+                linkTitle={dateFormat(a.createdAt)}
+              >
+                <TableOrder pieces={a.pieces} />
+              </LinkListItem>
+            ))}
+          </ListGroup>
+        </React.Fragment>
       ) : (
         <h3>You haven’t ordered yet</h3>
       )}

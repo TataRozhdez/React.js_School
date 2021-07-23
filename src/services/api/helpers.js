@@ -4,4 +4,6 @@ export const getOrigins = async () =>
   await instance
     .get(`/products-origins`)
     .then((res) => res.data.items)
-    .catch((err) => err)
+    .catch((err) => {
+      throw Error(err)
+    })

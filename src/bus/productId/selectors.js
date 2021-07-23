@@ -1,9 +1,8 @@
-import {createSelector} from "reselect";
+import { createSelector } from 'reselect'
 
 const getProductState = (state) => state.productId
 
 export const getProduct = createSelector(
-    getProductState,
-    ({ loading, error, product }) => ({ loading, error, product })
+  getProductState,
+  ({ loading, error, product }) => ({ loading, error, product })
 )
-

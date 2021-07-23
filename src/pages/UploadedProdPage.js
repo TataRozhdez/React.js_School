@@ -54,7 +54,7 @@ export const UploadedProdPage = () => {
       </div>
 
       <div className="w-100 d-flex justify-content-end">
-        {uploads && (
+        {!!total && (
           <CustomPagination
             total={total}
             page={page}

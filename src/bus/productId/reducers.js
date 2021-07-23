@@ -20,6 +20,6 @@ export const productId = createReducer(initialState, (builder) => {
     })
     .addCase(getProductID.rejected, (state, action) => {
       state.loading = false
-      state.error = action.payload
+      state.error = action.error.message || 'Conection Error'
     })
 })

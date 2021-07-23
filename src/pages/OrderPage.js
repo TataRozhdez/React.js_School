@@ -1,16 +1,17 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button } from 'react-bootstrap'
+import { Container, Button, Alert } from 'react-bootstrap'
 
 import { getOrder, getOrderTotal } from '../bus/order/newOrder/selectors'
 import { addOrder, removeOrder } from '../bus/order/newOrder/actions'
 import { postOrder } from '../bus/order/newOrder/thunks'
 
 import { CartCard } from '../components/cards/CartCard/CartCard'
+import { CustomSpinner } from '../components/CustomSpinner/CustomSpinner'
 
 export const OrderPage = () => {
   const dispatch = useDispatch()
-  const order = useSelector(getOrder)
+  const { order, error, loading } = useSelector(getOrder)
   const total = useSelector(getOrderTotal)
 
   const handleAddOrder = (id, name, price) =>
@@ -21,6 +22,9 @@ export const OrderPage = () => {
 
   return (
     <Container>
+      {error && <Alert variant="danger">{error}</Alert>}
+      {loading && <CustomSpinner />}
+
       <div className="mb-3 d-flex flex-row flex-wrap">
         {order && order.length ? (
           order.map((o) => (

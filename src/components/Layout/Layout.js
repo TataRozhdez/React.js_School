@@ -8,7 +8,6 @@ import { calcOrders } from '../../utils'
 import { onUpload } from '../../bus/uploadModal/selectors'
 import { onVisibleUpload } from '../../bus/uploadModal/actions'
 import { patchProduct, postProduct } from '../../bus/uploadModal/thunks'
-import { fetchProducts } from '../../bus/products/allProducts/thunks'
 import { getOrder, getOrderTotal } from '../../bus/order/newOrder/selectors'
 import { setOrder } from './../../bus/order/newOrder/actions'
 import { setTotal } from '../../bus/order/newOrder/actions'
@@ -21,7 +20,7 @@ export const Layout = ({ children }) => {
   const location = history.location.pathname
   const dispatch = useDispatch()
 
-  const order = useSelector(getOrder)
+  const { order } = useSelector(getOrder)
   const total = useSelector(getOrderTotal)
 
   const { loading, error, successMsg, visible } = useSelector(onUpload)
@@ -38,7 +37,6 @@ export const Layout = ({ children }) => {
     }
 
     id ? dispatch(patchProduct({ id, data })) : dispatch(postProduct(data))
-    dispatch(fetchProducts())
   }
 
   useEffect(() => {

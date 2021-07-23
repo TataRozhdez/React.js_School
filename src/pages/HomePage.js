@@ -48,6 +48,7 @@ export const HomePage = () => {
     <Container className="flex-column fade-in">
       {loading && <CustomSpinner />}
       {error && <Alert variant="danger">{error}</Alert>}
+
       <Filter />
       <div className="d-flex flex-row flex-wrap mb-2">
         {products &&

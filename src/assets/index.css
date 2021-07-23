@@ -12,7 +12,10 @@ button:disabled {
 .alert {
   z-index: 9999;
   position: fixed;
-  width: 100%;
+  min-width: 320px;
+  top: 3%;
+  right: 50%;
+  transform: translate(50%);
 }
 
 .plug {
@@ -100,10 +103,6 @@ button:disabled {
 
 .w-10 {
   width: 10%;
-}
-
-.list-group-item:hover {
-  background-color: #f1f1f1;
 }
 
 @keyframes fade-in {

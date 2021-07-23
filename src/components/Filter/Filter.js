@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Button, Accordion, Spinner } from 'react-bootstrap'
+import { Form, Button, Accordion, Spinner, Alert } from 'react-bootstrap'
 import { List } from 'react-bootstrap-icons'
 import Select from 'react-select'
 
@@ -18,7 +18,7 @@ import { MultiRange } from '../MultiRange/MultiRange'
 export const Filter = () => {
   const dispatch = useDispatch()
 
-  const { minPrice, maxPrice, origin, allOrigins, loading } =
+  const { minPrice, maxPrice, origin, allOrigins, loading, error } =
     useSelector(getFilters)
 
   const onChangePriceMin = (value) => dispatch(changePriceMin(value))
@@ -35,6 +35,7 @@ export const Filter = () => {
 
   return (
     <Form className="mb-2">
+      {error && <Alert variant="danger">{error}</Alert>}
       <Accordion>
         <Accordion.Toggle as={Button} variant="light" eventKey="0">
           {loading ? (

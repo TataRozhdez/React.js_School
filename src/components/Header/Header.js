@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Navbar, Badge, Button } from 'react-bootstrap'
 import { Cart2, HouseDoor, Inboxes, Bookmarks } from 'react-bootstrap-icons'
 
-import { OverlayLinkBtn } from '../OverlayLinkBtn/OverlayLinkBtn'
+import { OverlayLinkBtn } from '../links/OverlayLinkBtn/OverlayLinkBtn'
 import Logo from '../../assets/logo.png'
 
 export const Header = ({ totalOrder, pathname, onUploadedVisible }) => (

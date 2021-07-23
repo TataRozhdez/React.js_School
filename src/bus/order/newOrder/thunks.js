@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { store } from '../../../init/store'
 import { postOrderApi } from '../../../services/api/order'
+import history from '../../../services/history'
 import { prepareOrderPost } from '../../../utils'
 import { POST_ORDER } from './constants'
 
@@ -17,5 +18,5 @@ export const postOrder = createAsyncThunk(POST_ORDER, async () => {
 
   const response = await postOrderApi(data)
 
-  return response.statusText
+  return history.push(`/archive/${response.data.id}`)
 })

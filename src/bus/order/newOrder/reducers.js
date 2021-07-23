@@ -56,6 +56,6 @@ export const newOrder = createReducer(initialState, (builder) => {
 
     .addCase(postOrder.rejected, (state, action) => {
       state.loading = false
-      state.error = action.error.name
+      state.error = action.error.message || 'Conection Error'
     })
 })

@@ -35,6 +35,6 @@ export const filters = createReducer(initialState, (builder) => {
     })
     .addCase(fetchOrigins.rejected, (state, action) => {
       state.loading = false
-      state.error = action.payload
+      state.error = action.error.message || 'Conection Error'
     })
 })

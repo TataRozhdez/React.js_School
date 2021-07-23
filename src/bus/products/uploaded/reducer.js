@@ -24,6 +24,6 @@ export const uploaded = createReducer(initialState, (builder) => {
     })
     .addCase(fetchUploads.rejected, (state, action) => {
       state.loading = false
-      state.error = action.payload
+      state.error = action.error.message || 'Conection Error'
     })
 })

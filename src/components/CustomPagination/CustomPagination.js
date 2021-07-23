@@ -2,8 +2,6 @@ import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Pagination, Form } from 'react-bootstrap'
 
-import { getArrayByNumber } from '../../utils'
-
 export const CustomPagination = ({
   total,
   page,
@@ -18,7 +16,7 @@ export const CustomPagination = ({
   }, [total, perPage])
 
   const pagesItems = useMemo(() => {
-    if (pagesCount < 3) return getArrayByNumber(pagesCount)
+    if (pagesCount <= 3) return [1, 2, 3]
 
     const prev = page - 1
     const next = page + 1

@@ -40,7 +40,7 @@ export const uploadModal = createReducer(initialState, (builder) => {
     .addCase(postProduct.rejected, (state, action) => {
       state.loading = false
       state.successMsg = null
-      state.error = action.payload
+      state.error = action.error.message || 'Conection Error'
     })
     .addCase(patchProduct.pending, (state) => {
       state.loading = true
@@ -57,6 +57,6 @@ export const uploadModal = createReducer(initialState, (builder) => {
     .addCase(patchProduct.rejected, (state, action) => {
       state.loading = false
       state.successMsg = null
-      state.error = action.payload
+      state.error = action.error.message || 'Conection Error'
     })
 })

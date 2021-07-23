@@ -1,11 +1,6 @@
-export const getArrayByNumber = (number) =>
-  [].reduce((acc) => {
-    for (let i = 0; i < number; i += 1) {
-      acc.push(i)
-    }
+import format from 'date-fns/format'
 
-    return acc
-  }, [])
+export const dateFormat = (date) => format(new Date(date), 'dd-MM-yyyy HH:mm')
 
 export const calcOrders = (arr) =>
   arr.reduce(
