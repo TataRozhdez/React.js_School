@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Container, Button, Alert } from 'react-bootstrap'
 
 import { getOrder, getOrderTotal } from '../bus/order/newOrder/selectors'
-import { addOrder, removeOrder } from '../bus/order/newOrder/actions'
-import { postOrder } from '../bus/order/newOrder/thunks'
+import {
+  addOrder,
+  postOrderRequest,
+  removeOrder,
+} from '../bus/order/newOrder/actions'
 
 import { CartCard } from '../components/cards/CartCard/CartCard'
 import { CustomSpinner } from '../components/CustomSpinner/CustomSpinner'
@@ -18,7 +21,7 @@ export const OrderPage = () => {
     dispatch(addOrder(id, name, price))
 
   const handleRemoveOrder = (id, number) => dispatch(removeOrder(id, number))
-  const handlePostOrder = () => dispatch(postOrder())
+  const handlePostOrder = () => dispatch(postOrderRequest())
 
   return (
     <Container>

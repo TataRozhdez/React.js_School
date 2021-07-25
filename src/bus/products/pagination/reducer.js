@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { changePage, changePerPage } from './actions'
+import { setPagination } from './thunks'
 
 const initialState = {
   page: 1,
@@ -13,5 +14,8 @@ export const pagination = createReducer(initialState, (builder) => {
     })
     .addCase(changePerPage, (state, action) => {
       state.perPage = action.payload
+    })
+    .addCase(setPagination.fulfilled, (state, action) => {
+      action.payload.map((a) => (state[a[0]] = a[1]))
     })
 })

@@ -2,6 +2,8 @@ import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Pagination, Form } from 'react-bootstrap'
 
+import { setLinkParams } from '../../utils/linkParser'
+
 export const CustomPagination = ({
   total,
   page,
@@ -48,6 +50,18 @@ export const CustomPagination = ({
     return arr
   }, [page, pagesCount, total])
 
+  const handlePerPage = (e) => {
+    const { value } = e.target
+
+    onChangePerPage(value)
+    setLinkParams({ perPage: value })
+  }
+
+  const handlePage = (number) => {
+    onChangePage(number)
+    setLinkParams({ page: number })
+  }
+
   return (
     <div className="w-100 d-flex flex-row justify-content-end align-items-center mb-3">
       {pagesItems && (
@@ -56,7 +70,7 @@ export const CustomPagination = ({
             as="select"
             className="w-10 me-3"
             value={perPage}
-            onChange={(e) => onChangePerPage(e.target.value)}
+            onChange={handlePerPage}
           >
             <option value="10">10</option>
             <option value="15">15</option>
@@ -64,7 +78,7 @@ export const CustomPagination = ({
           </Form.Control>
 
           <Pagination className="m-0">
-            {page > 1 && <Pagination.First onClick={() => onChangePage(1)} />}
+            {page > 1 && <Pagination.First onClick={() => handlePage(1)} />}
             {pagesItems.map((p) => {
               if (p === 0.111) {
                 return (
@@ -75,14 +89,14 @@ export const CustomPagination = ({
                 <Pagination.Item
                   key={`pagination_${p}`}
                   active={p === page}
-                  onClick={() => onChangePage(p)}
+                  onClick={() => handlePage(p)}
                 >
                   {p}
                 </Pagination.Item>
               )
             })}
             {pagesItems && page < pagesCount - 1 && (
-              <Pagination.Last onClick={() => onChangePage(pagesCount - 1)} />
+              <Pagination.Last onClick={() => handlePage(pagesCount - 1)} />
             )}
           </Pagination>
         </React.Fragment>

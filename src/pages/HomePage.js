@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { fetchProducts } from '../bus/products/allProducts/thunks'
 import { getProducts } from '../bus/products/allProducts/selectors'
-import { getFilters } from '../bus/products/filters/selectors'
 import { addOrder } from '../bus/order/newOrder/actions'
-import { paginationSelector } from '../bus/products/pagination/selectors'
+import { getPagination } from '../bus/products/pagination/selectors'
 import { changePage, changePerPage } from '../bus/products/pagination/actions'
 import { onVisibleUpload, setDataUpload } from '../bus/uploadModal/actions'
+import { setParamsFilter } from '../bus/products/filters/thunks'
+import { setPagination } from '../bus/products/pagination/thunks'
 
 import { CustomCard } from '../components/cards/CustomCard/CustomCard'
 import { CustomPagination } from '../components/CustomPagination/CustomPagination'
@@ -19,16 +20,11 @@ export const HomePage = () => {
   const dispatch = useDispatch()
 
   const { products, total, loading, error } = useSelector(getProducts)
-  const { page, perPage } = useSelector(paginationSelector)
+  const { page, perPage } = useSelector(getPagination)
 
-  const { minPrice, maxPrice, origins } = useSelector(getFilters)
-
-  const handleAddOrder = (id, name, price) => {
+  const handleAddOrder = (id, name, price) =>
     dispatch(addOrder(id, name, price))
-  }
-
   const handleChangePage = (num) => dispatch(changePage(num))
-
   const handleChangePerPage = (num) => dispatch(changePerPage(num))
 
   const handleEditProduct = (data) => {
@@ -38,11 +34,9 @@ export const HomePage = () => {
 
   useEffect(() => {
     dispatch(fetchProducts())
-  }, [page, perPage, origins])
-
-  useEffect(() => {
-    handleChangePage(1)
-  }, [origins, minPrice, maxPrice])
+    dispatch(setParamsFilter())
+    dispatch(setPagination())
+  }, [page, perPage])
 
   return (
     <Container className="flex-column fade-in">
