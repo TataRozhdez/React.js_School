@@ -24,7 +24,7 @@ export const OrderPage = () => {
   const handlePostOrder = () => dispatch(postOrderRequest())
 
   return (
-    <Container>
+    <Container className="fade-in">
       {error && <Alert variant="danger">{error}</Alert>}
       {loading && <CustomSpinner />}
 
