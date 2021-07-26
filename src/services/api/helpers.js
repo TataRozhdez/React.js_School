@@ -1,47 +1,9 @@
 import { instance } from './axiosConfig'
 
-export const getProductsApi = async ({
-  page,
-  perPage,
-  minPrice,
-  maxPrice,
-  origins,
-}) => {
-  try {
-    const products = await instance.get('/products', {
-      params: {
-        page,
-        perPage,
-        minPrice,
-        maxPrice,
-        origins,
-      },
+export const getOrigins = async () =>
+  await instance
+    .get(`/products-origins`)
+    .then((res) => res.data.items)
+    .catch((err) => {
+      throw Error(err)
     })
-    return {
-      products: products.data.items,
-      total: products.data.totalItems,
-    }
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-export const getProductIDApi = async (id) => {
-  try {
-    const product = await instance.get(`/products/${id}`)
-
-    return product.data
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-export const getOrigins = async () => {
-  try {
-    const product = await instance.get(`/products-origins`)
-
-    return product.data.items
-  } catch (error) {
-    console.error(error)
-  }
-}

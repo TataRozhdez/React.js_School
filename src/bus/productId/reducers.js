@@ -9,7 +9,7 @@ const initialState = {
   product: null,
 }
 
-export const productIdReducer = createReducer(initialState, (builder) => {
+export const productId = createReducer(initialState, (builder) => {
   builder
     .addCase(getProductID.pending, (state) => {
       state.loading = true
@@ -20,6 +20,6 @@ export const productIdReducer = createReducer(initialState, (builder) => {
     })
     .addCase(getProductID.rejected, (state, action) => {
       state.loading = false
-      state.error = action.payload
+      state.error = action.error.message || 'Conection Error'
     })
 })

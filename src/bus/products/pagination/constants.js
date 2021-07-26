@@ -1,2 +1,3 @@
 export const CHANGE_PAGE = 'CHANGE_PAGE'
 export const CHANGE_PER_PAGE = 'CHANGE_PER_PAGE'
+export const SET_PAGINATION = 'SET_PAGINATION'

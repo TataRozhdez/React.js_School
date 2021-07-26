@@ -3,26 +3,20 @@ import PropTypes from 'prop-types'
 
 import './MultiRange.css'
 
-export const MultiRange = ({
-  min,
-  max,
-  changePriceMin,
-  onChangePriceMax,
-  onFetchProducts,
-}) => {
+export const MultiRange = ({ min, max, changePriceMin, onChangePriceMax }) => {
   const minValRef = useRef(min)
   const maxValRef = useRef(max)
   const range = useRef(null)
 
   const handleChangeMin = (event) => {
     const value = Math.min(Number(event.target.value), max - 1)
-    changePriceMin(value)
+    changePriceMin(`${value}`)
     minValRef.current = value
   }
 
   const handleChangeMax = (event) => {
     const value = Math.max(Number(event.target.value), min + 1)
-    onChangePriceMax(value)
+    onChangePriceMax(`${value}`)
     maxValRef.current = value
   }
 
@@ -47,7 +41,6 @@ export const MultiRange = ({
         value={min}
         step="10"
         onChange={handleChangeMin}
-        onMouseOut={onFetchProducts}
         className="thumb thumb--left"
       />
       <input
@@ -57,7 +50,6 @@ export const MultiRange = ({
         value={max}
         step="10"
         onChange={handleChangeMax}
-        onMouseOut={onFetchProducts}
         className="thumb thumb--right"
       />
       <div className="slider">
@@ -71,9 +63,8 @@ export const MultiRange = ({
 }
 
 MultiRange.propTypes = {
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
+  min: PropTypes.string.isRequired,
+  max: PropTypes.string.isRequired,
   changePriceMin: PropTypes.func.isRequired,
   onChangePriceMax: PropTypes.func.isRequired,
-  onFetchProducts: PropTypes.func.isRequired,
 }

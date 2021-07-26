@@ -1,8 +1,5 @@
 import { createSelector } from 'reselect'
 
-const paginationReducer = (state) => state.products.paginationReducer
+const paginationState = (state) => state.products.pagination
 
-export const paginationSelector = createSelector(
-  [paginationReducer],
-  (data) => data
-)
+export const getPagination = createSelector([paginationState], (data) => data)

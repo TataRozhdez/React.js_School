@@ -1,26 +1,35 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button } from 'react-bootstrap'
+import { Container, Button, Alert } from 'react-bootstrap'
+
+import { getOrder, getOrderTotal } from '../bus/order/newOrder/selectors'
+import {
+  addOrder,
+  postOrderRequest,
+  removeOrder,
+} from '../bus/order/newOrder/actions'
 
 import { CartCard } from '../components/cards/CartCard/CartCard'
-import {getOrder, getOrderTotal} from '../bus/order/selectors'
-import { addOrder, removeOrder } from '../bus/order/actions'
+import { CustomSpinner } from '../components/CustomSpinner/CustomSpinner'
 
 export const OrderPage = () => {
   const dispatch = useDispatch()
-  const order = useSelector(getOrder)
+  const { order, error, loading } = useSelector(getOrder)
   const total = useSelector(getOrderTotal)
 
   const handleAddOrder = (id, name, price) =>
     dispatch(addOrder(id, name, price))
 
   const handleRemoveOrder = (id, number) => dispatch(removeOrder(id, number))
+  const handlePostOrder = () => dispatch(postOrderRequest())
 
   return (
     <Container>
-      <h1 className="text-primary mb-4">Shopping Cart</h1>
+      {error && <Alert variant="danger">{error}</Alert>}
+      {loading && <CustomSpinner />}
+
       <div className="mb-3 d-flex flex-row flex-wrap">
-        {order ? (
+        {order && order.length ? (
           order.map((o) => (
             <CartCard
               key={o.id}
@@ -30,13 +39,27 @@ export const OrderPage = () => {
             />
           ))
         ) : (
-          <h3>Please, add something to your cart</h3>
+          <h3 className="mt-5 text-center w-100">
+            Please, add something to your cart
+          </h3>
         )}
       </div>
-      {total && (
-        <div className="w-100 d-flex justify-content-end">
-          <Button variant="success" disabled>
-            <h3 className="m-0">Total: {total.price}$</h3>
+
+      <hr />
+      {total.number > 0 && (
+        <div className="w-100 d-flex align-items-center flex-column">
+          <p className="w-50 mb-4 d-flex flex-row justify-content-around">
+            <span className="badge fs-6 me-2 bg-light text-dark">
+              Amount items:&nbsp;
+              <span className="badge fs-5 bg-danger">{total.number}</span>
+            </span>
+            <span className="badge fs-6 me-2 bg-light text-dark">
+              Total price:&nbsp;
+              <span className="badge fs-5 bg-danger">{total.price}$</span>
+            </span>
+          </p>
+          <Button variant="danger w-50 px-5" onClick={handlePostOrder}>
+            <span className="m-0 text-uppercase fw-bold">confirm order</span>
           </Button>
         </div>
       )}

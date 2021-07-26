@@ -1,12 +1,21 @@
 a,
+a:-webkit-any-link,
 .nav-link {
   color: inherit;
+  cursor: auto;
+}
+
+button:disabled {
+  opacity: 0.4 !important;
 }
 
 .alert {
   z-index: 9999;
   position: fixed;
-  width: 100%;
+  min-width: 320px;
+  top: 3%;
+  right: 50%;
+  transform: translate(50%);
 }
 
 .plug {
@@ -20,7 +29,10 @@ a,
   left: 0;
   bottom: 0;
   background-color: #0000008f;
-  animation: fade-in 1s linear;
+}
+
+.fade-in {
+  animation: fade-in 0.4s linear;
 }
 
 .plug >  .spinner-border {
@@ -30,6 +42,11 @@ a,
 
 .card {
   min-width: 155px;
+  z-index: 5;
+}
+
+.z-10 {
+  z-index: 10;
 }
 
 .card-title  {
@@ -43,14 +60,15 @@ a,
 .page-item.active .page-link {
   z-index: 3;
   color: #fff;
-  background-color: green;
-  border-color: green;
+  background-color:  var(--bs-green);
+  border-color:  var(--bs-green);
 }
 
 .page-link,
 .page-link:hover {
   z-index: 2;
-  color: green;
+  color:  var(--bs-green);
+  cursor: pointer
 }
 
 .form-control:disabled, .form-control[readonly] {
@@ -67,16 +85,20 @@ a,
   border-color: #ced4da;
 }
 
-.badge-primary {
-  background-color: #21c28a; 
+.btn .badge {
+  background-color: var(--bs-green); 
   border-radius: 50%;
   padding: 5px;
   font-size: 11px;
   position: absolute;
-  right: 16px;
-  top: 6%;
+  right: 20px;
+  top: 15%;
   min-width: 23px;
   text-align: center;
+}
+
+.btn-outline-success {
+  border: none;
 }
 
 .w-10 {

@@ -5,11 +5,12 @@ import { fetchProducts } from './thunks'
 const initialState = {
   loading: false,
   error: null,
+
   products: null,
   total: 0,
 }
 
-export const allProductsReducer = createReducer(initialState, (builder) => {
+export const allProducts = createReducer(initialState, (builder) => {
   builder
     .addCase(fetchProducts.pending, (state) => {
       state.loading = true
@@ -23,6 +24,6 @@ export const allProductsReducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchProducts.rejected, (state, action) => {
       state.loading = false
-      state.error = action.payload
+      state.error = action.error.message || 'Conection Error'
     })
 })
